@@ -13,7 +13,8 @@ import java.util.Map;
 public class RegisterRequeast extends StringRequest {
 
     // für localhot muss Nur die aktuelle IP einsetzen (ipconfig)
-    private static final String REGISTER_REQUEST_URL = "http://agelong-rations.000webhostapp.com/Register.php";
+     //private static final String REGISTER_REQUEST_URL = "http://192.168.1.162/Register.php";
+   private static final String REGISTER_REQUEST_URL = "http://agelong-rations.000webhostapp.com/Register.php";
     private Map<String, String> params;
 
     public RegisterRequeast(String name, String username, String password, int age, Response.Listener<String> listener){
