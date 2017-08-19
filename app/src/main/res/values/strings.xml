@@ -8,4 +8,8 @@
     <string name="name">Name</string>
     <string name="textview">TextView</string>
     <string name="user">Username</string>
+    <string name="lblShowSaved">Show Saved</string>
+    <string name="lblTakeFolder">Take Folder</string>
+    <string name="lblTakePhoto">Take Photo</string>
+    <string name="lblSave">Save</string>
 </resources>

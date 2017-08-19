@@ -5,72 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.somaro.loginregister.UserAreaActivity">
+    tools:context="com.example.somaro.loginregister.UserAreaActivity"
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/tvWelcomeMsg"
-        android:layout_width="353dp"
+        android:layout_width="match_parent"
         android:layout_height="38dp"
+
         android:text="@string/textview"
-        tools:layout_editor_absoluteX="16dp"
-        tools:textAllCaps="false"
-        tools:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/age"
-        tools:layout_editor_absoluteX="16dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/etUsername" />
-
-    <EditText
-        android:id="@+id/etUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="16dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/vtUsername" />
-
-    <EditText
-        android:id="@+id/etAge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="16dp"
-        android:layout_marginTop="-17dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/vtUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/user"
-        app:layout_constraintTop_toBottomOf="@+id/tvWelcomeMsg"
-        tools:layout_editor_absoluteX="16dp" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Capture Image"
-        app:layout_constraintTop_toBottomOf="@+id/etAge"
-        tools:layout_editor_absoluteX="79dp" />
+       />
 
     <ImageView
         android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        tools:layout_editor_absoluteY="268dp"
-        tools:layout_editor_absoluteX="17dp" />
+        android:layout_weight="1"
+        tools:layout_editor_absoluteX="17dp"
+        tools:layout_editor_absoluteY="268dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/btnTakePhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/holo_orange_light"
+                android:elevation="17dp"
+                android:onClick="onTakePhotoClick"
+                android:text="@string/lblTakePhoto" />
+
+            <Button
+                android:id="@+id/btnShowSaved"
+                android:layout_width="154dp"
+                android:layout_height="65dp"
+
+                android:layout_weight="1"
+                android:background="@android:color/holo_green_dark"
+                android:elevation="6dp"
+                android:onClick="onImageGalleryClick"
+                android:text="@string/lblShowSaved"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
