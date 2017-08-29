@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-//import android.support.v7.app.AppCompatActivity;
+
 
 public class UserAreaActivity extends Activity {
     public static final int IMAGE_GALLERY_REQUEST = 20;
@@ -84,10 +84,12 @@ public class UserAreaActivity extends Activity {
     }
 
     private String getFilename() {
-        File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
+        File file = Environment.getDataDirectory();
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA:" +file.toString());
        File dir = new File(file, "AlexAAAA");
         dir.mkdir();
-        String uriSting = (dir.getAbsolutePath() + "/"
+        String uriSting = (dir +"/"
                 + System.currentTimeMillis() + ".jpg");
         return uriSting;
     }
