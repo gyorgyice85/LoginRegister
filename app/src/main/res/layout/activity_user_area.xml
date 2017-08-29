@@ -14,7 +14,11 @@
         android:layout_height="64dp"
 
         android:text="@string/textview"
+<<<<<<< HEAD
         />
+=======
+       />
+>>>>>>> 309d8a2e1c8449ec1874f3aad6c9da89b7130e76
 
     <LinearLayout
         android:layout_width="match_parent"
