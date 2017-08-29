@@ -42,7 +42,7 @@ public class NeighborDbSource {
     };
 
     public NeighborDbSource(){
-        neighborMemo = new Neighbour();
+
     }
 
       /*
