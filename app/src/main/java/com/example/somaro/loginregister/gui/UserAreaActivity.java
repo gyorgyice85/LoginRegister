@@ -85,12 +85,16 @@ public class UserAreaActivity extends Activity {
 
     private String getFilename() {
 
-        File file = Environment.getDataDirectory();
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA:" +file.toString());
-       File dir = new File(file, "AlexAAAA");
-        dir.mkdir();
-        String uriSting = (dir +"/"
-                + System.currentTimeMillis() + ".jpg");
+        File file = new File(Environment.getExternalStorageDirectory() + File.separator+"images");
+
+        File dir = new File(file, "AlexAAA");
+
+        if(dir.mkdirs()){
+
+        }
+
+        String uriSting = (dir.getAbsolutePath() +"/"
+                + System.currentTimeMillis() + ".png");
         return uriSting;
     }
 
