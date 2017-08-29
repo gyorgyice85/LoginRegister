@@ -28,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
+
         <activity android:name="com.example.somaro.loginregister.gui.RegisterActivity" />
         <activity android:name="com.example.somaro.loginregister.gui.UserAreaActivity"></activity>
 
@@ -39,11 +39,10 @@
             android:grantUriPermissions="true">
 
 
-<<<<<<< HEAD
-            <meta-data
-=======
+
+
         <meta-data
->>>>>>> 309d8a2e1c8449ec1874f3aad6c9da89b7130e76
+
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
