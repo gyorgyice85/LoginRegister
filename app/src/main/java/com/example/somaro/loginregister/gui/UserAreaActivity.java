@@ -87,15 +87,18 @@ public class UserAreaActivity extends Activity {
 
         File file = new File(Environment.getExternalStorageDirectory() + File.separator+"images");
 
-        File dir = new File(file, "AlexAAA");
+        File dir = new File(file, "CAN_PICS");
 
         if(dir.mkdirs()){
-
+            String uriSting = (dir.getAbsolutePath() +"/"
+                    + System.currentTimeMillis() + ".jpg");
+            return uriSting;
+        }else{
+            // TODO: 29.08.2017 throw exception 
         }
 
-        String uriSting = (dir.getAbsolutePath() +"/"
-                + System.currentTimeMillis() + ".png");
-        return uriSting;
+
+        return null;
     }
 
     public void onImageGalleryClick(View v){
