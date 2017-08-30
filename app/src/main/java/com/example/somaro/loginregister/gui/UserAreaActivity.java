@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,16 +22,8 @@ import java.io.FileOutputStream;
 
 public class UserAreaActivity extends Activity {
     public static final int IMAGE_GALLERY_REQUEST = 20;
-    Button btnTakePhoto;
     private ImageView imageView ;
-
-    File pictureDirectory ;
-    static final int REQUEST_TAKE_PHOTO = 1;
-    static final int REQUEST_IMAGE_CAPTURE =1;
-    private static final int CAMERA_PHOTO = 111;
     static final int CAM_REQUEST = 1 ;
-    private String mImageFileLocation = "";
-    private static final int ACTIVITY_START_CAMERA_APP = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,28 +32,34 @@ public class UserAreaActivity extends Activity {
 
 
         imageView = (ImageView) findViewById(R.id.imageView);
-
-        //final EditText etUsername = (EditText) findViewById(R.id.etUsername);
-        //final EditText etAge = (EditText) findViewById(R.id.etAge);
         final TextView welcomeMsg = (TextView) findViewById(R.id.tvWelcomeMsg);
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
-        String username = intent.getStringExtra("username");
-        //int age = intent.getIntExtra("age", -1);
 
         String message = name + " welcome to your user area";
         welcomeMsg.setText(message);
-        // etUsername.setText(username);
-        // etAge.setText(age + "");
     }
+
+    /**
+     *  Methode zum starten der Kammera
+     *
+     * @param v
+     */
     public void btnSaveClicked (View v) {
 
         Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(camera_intent, CAM_REQUEST);
-
     }
 
+    /**
+     * Methode zum Anzeigen des Bildes in der App
+     * Und Aufruf der anderen Methoden
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Bitmap bitmap = (Bitmap)data.getExtras().get("data");
@@ -70,8 +67,14 @@ public class UserAreaActivity extends Activity {
         saveImageFile(bitmap) ;
         }
 
-
-    public String saveImageFile(Bitmap bitmap) {
+    /**
+     *
+     * Methode zum Speichern des Bildes
+     *
+     * @param bitmap Das Bild
+     * @return der Dateiname
+     */
+    private String saveImageFile(Bitmap bitmap) {
         FileOutputStream out = null;
         String filename = getFilename();
         try {
@@ -83,24 +86,37 @@ public class UserAreaActivity extends Activity {
         return filename;
     }
 
+    /**
+     * Methode zum Erstellen des Speicherpfades
+     *
+     * @return der Speicherpfad
+     */
     private String getFilename() {
 
         File file = new File(Environment.getExternalStorageDirectory() + File.separator+"images");
 
         File dir = new File(file, "CAN_PICS");
+        Toast.makeText(UserAreaActivity.this, dir.toString(), Toast.LENGTH_SHORT).show();
+        /*if(dir.mkdirs()){
 
-        if(dir.mkdirs()){
             String uriSting = (dir.getAbsolutePath() +"/"
                     + System.currentTimeMillis() + ".jpg");
-            return uriSting;
+                return uriString;
         }else{
             // TODO: 29.08.2017 throw exception 
-        }
+        }*/
 
-
-        return null;
+        dir.mkdirs();
+        String uriString = (dir.getAbsolutePath() +"/"
+                + System.currentTimeMillis() + ".jpg");
+        return uriString;
     }
 
+    /**
+     * Öffnen der Foto Gallery
+     *
+     * @param v
+     */
     public void onImageGalleryClick(View v){
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 
@@ -111,10 +127,7 @@ public class UserAreaActivity extends Activity {
 
         photoPickerIntent.setDataAndType(data, "image/*");
 
-
         startActivityForResult(photoPickerIntent,IMAGE_GALLERY_REQUEST );
-
     }
-
 
 }

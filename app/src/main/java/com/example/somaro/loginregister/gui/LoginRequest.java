@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class LoginRequest extends StringRequest{
 
-    // für localhot muss Nur die aktuelle IP einsetzen (ipconfig)
+    // für localhost muss Nur die aktuelle IP einsetzen (ipconfig)
     //private static final String LOGIN_REQUEST_URL = "http://192.168.1.162/Login.php";
     private static final String LOGIN_REQUEST_URL = "http://agelong-rations.000webhostapp.com/Login.php";
     private Map<String, String> params;
