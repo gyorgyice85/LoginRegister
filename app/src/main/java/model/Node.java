@@ -123,8 +123,19 @@ public class Node {
         return umgekehrt;
     }
 
-
-
+    /**
+     *
+     * @param ip
+     * @param x X-Wert des zu routenden Bildes
+     * @param y Y-Wert des zu routenden Bildes
+     * @param FotoId Foto-ID
+     */
+    private void receivePicRoutingRequest(String ip, double x, double y, int FotoId){
+        //// TODO: 15.08.2017 Verbindungsaufbau zu der ip um Bild herunterzuladen und dann zu speichern
+        /// TODO: 15.08.2017 verbindungsaufbau zu Peers und diesen werden die Informationen zum Bild übermittelt und nun laden sie sich das Bild von zuletzt gerouteten Node herunter
+        //fortsetzung des routing
+        routing(ip,x,y,FotoId);
+    }
 
     /**
      * Methode die den Routing-Vorgang weiterleitet falls das Ziel noch nicht erreicht wurde
@@ -132,25 +143,20 @@ public class Node {
      * @param x X-Wert des zu routenden Knoten
      * @param y Y-Wert des zu routenden Knoten
      * @param id kann jeweils FotoID oder UID sein, wird benötigt sodass man seinen Peers die nötigen Informationen zu dem neuen Knoten geben kann
-     * @param isNode Dient zur unterscheidung von Knoten und Bildern
      */
-    private void receiveRoutingRequest(String ip, double x, double y, int id, boolean isNode) {
+    private void receiveRoutingRequest(String ip, double x, double y, int id) {
         if(getMyZone().checkIfInMyZone(x,y)){
-            if(isNode){
-                // wie bekomme ich das jeweilige socketobject zum versenden
-                //// TODO: 14.08.2017  Reply to Request-Method(muss setPeers(mit sich selbst) und setNeighbours mitsenden)
-                //// TODO: 14.08.2017 Muss aktuelle Peers über den neuen Knoten Informieren, sodass diese ihre Peerliste updaten. Nun update deine eigene Peerlist
-                if(checkIfMaxPeersCount()){
-                    //// TODO: 15.08.2017 informiere deine Peers das sie nun Splitten müssen// methode die einen Splitt aufruft
-                    //// TODO: 14.08.2017 SPLITT
-                }
-            }else {
-                //// TODO: 15.08.2017 Verbindungsaufbau zu der ip um Bild herunterzuladen und dann zu speichern
-                /// TODO: 15.08.2017 verbindungsaufbau zu Peers und diesen werden die Informationen zum Bild übermittelt und nun laden sie sich das Bild von zuletzt gerouteten Node herunter
+            // wie bekomme ich das jeweilige socketobject zum versenden
+            //// TODO: 14.08.2017  Reply to Request-Method(muss setPeers(mit sich selbst) und setNeighbours mitsenden)
+            //// TODO: 14.08.2017 Muss aktuelle Peers über den neuen Knoten Informieren, sodass diese ihre Peerliste updaten. Nun update deine eigene Peerlist
+            if(checkIfMaxPeersCount()){
+                //// TODO: 15.08.2017 informiere deine Peers das sie nun Splitten müssen// methode die einen Splitt aufruft
+                //// TODO: 14.08.2017 SPLITT
             }
+
         }
         //fortsetzung des routing
-        routing(ip,x,y,id,isNode);
+        routing(ip,x,y,id);
     }
 
     /**
@@ -159,17 +165,18 @@ public class Node {
      * @param x Des zu routenden Knoten/Bild
      * @param y Des zu routenden Knoten/Bild
      * @param id Des zu routenden Knoten/Bild
-     * @param isNode Ist es ein Knoten? Wenn nicht dann ist es ein Bild
      */
-    private void routing(String ip, double x ,double y, int id, boolean isNode){
+    private void routing(String ip, double x ,double y, int id){
         double neighbourX, neighbourY;
         double [] distances = new double[4];
 
+        //bei 1 anfangen?
         for(int i=0; i<=distances.length ; i++){
 
+                //Die x und y Werte des Nachbarn von der DB holen
                 neighbourX = nDB.getPunktXNeighbor(i);
                 neighbourY = nDB.getPunktYNeighbor(i);
-
+                // Nun diese Distanzen berechnen und die am nächsten an dem Punkt zu dem gerouted werden soll.
                 distances[i] = computeDistance(x,y,neighbourX,neighbourY);
 
         }
@@ -198,8 +205,9 @@ public class Node {
      * @param fotoId
      */
     public void placePicInCan(String ip, double x, double y, int fotoId){
-        receiveRoutingRequest(ip, x, y, fotoId, false);
+        receivePicRoutingRequest(ip, x, y, fotoId);
     }
+
     /**
      * Diese Methode berechnet die Distanz zwischen den zu Routenden Knoten und den Neighbours des aktuellen Knotens(der routet)
      * @param x Des zu routenden Knoten
@@ -218,10 +226,10 @@ public class Node {
      * @param ip
      */
     private void informPeersAboutYourself(String ip) {
-        //// TODO: 14.08.2017    user.getUid(); von DB, user.getIP von DB
+        //// TODO: 14.08.2017 user.getUid(); von DB, user.getIP von DB
         //// TODO: 14.08.2017 sende an alle deine Peers ein setPeer mit diesen Informationen
-
     }
+
     /**
      * Vergleiche alle Distanzen der Nachbarn
      * @param distances Array mit allen Distanzen der Neighbour zu dem zu routenden Knoten
@@ -239,10 +247,6 @@ public class Node {
         }
         return index;
     }
-
-
-
-
 
     public void downloadOwnData(){
         // TODO: 28.08.2017  checken ob OwnData( auch wirklich die Bilder)
@@ -277,6 +281,7 @@ public class Node {
             countPeers++;
         }
     }
+
     public void decreasePeersCount(){
         if(countPeers < 1){
 
