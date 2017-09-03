@@ -2,27 +2,25 @@ package model;
 
 
 public class PeerMemo {
+    //DateiMemo dateiMemo;
 
     private long uid;
     private int peerId;
     private String peerIp;
-    private boolean checked;
+    //private boolean checked;
 
-    public PeerMemo() {
 
-    }
 
-    public PeerMemo(long uid, int peerId, String peerIp, boolean checked) {
-        this.uid = uid;
-        this.peerId = peerId;
-        this.peerIp = peerIp;
-        this.checked = checked;
-    }
+//    public PeerMemo(long uid, int peerId, String peerIp, boolean checked) {
+//        this.uid = uid;
+//        this.peerId = peerId;
+//        this.peerIp = peerIp;
+//        this.checked = checked;
+//    }
 
     public long getUid() {
         return uid;
     }
-
     public void setUid(long uid) {
         this.uid = uid;
     }
@@ -35,13 +33,13 @@ public class PeerMemo {
         this.peerId = peerId;
     }
 
-    public boolean isChecked() {
-        return checked;
-    }
-
-    public void setChecked (boolean checked) {
-        this.checked = checked;
-    }
+//    public boolean isChecked() {
+//        return checked;
+//    }
+//
+//    public void setChecked (boolean checked) {
+//        this.checked = checked;
+//    }
 
 
     public String getPeerIp() {
