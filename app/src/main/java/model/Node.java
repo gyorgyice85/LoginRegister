@@ -50,27 +50,27 @@ public class Node {
      * @param iP
      * @param countPeers
      */
-    public Node(long uid, boolean checked,
-                     double cornerTopRightX, double cornerTopRightY, double cornerTopLeftX, double cornerTopLeftY,
-                     double cornerBottomRightX, double cornerBottomRightY, double cornerBottomLeftX, double cornerBottomLeftY,
-                     double punktX, double punktY, String iP, int countPeers, Zone ownZone) {
-
-        this.uid                 = uid;
-        this.checked             = checked;
-        this.cornerTopRightX     = cornerTopRightX;
-        this.cornerTopRightY     = cornerTopRightY;
-        this.cornerTopLeftX      = cornerTopLeftX;
-        this.cornerTopLeftY      = cornerTopLeftY;
-        this.cornerBottomRightX  = cornerBottomRightX;
-        this.cornerBottomRightY  = cornerBottomRightY;
-        this.cornerBottomLeftX   = cornerBottomLeftX;
-        this.cornerBottomLeftY   = cornerBottomLeftY;
-        this.punktX              = punktX;
-        this.punktY              = punktY;
-        this.iP                  = iP;
-        this.countPeers          = countPeers;
-        this.ownZone             = ownZone;
-   }
+//    public Node(long uid, boolean checked,
+//                     double cornerTopRightX, double cornerTopRightY, double cornerTopLeftX, double cornerTopLeftY,
+//                     double cornerBottomRightX, double cornerBottomRightY, double cornerBottomLeftX, double cornerBottomLeftY,
+//                     double punktX, double punktY, String iP, int countPeers, Zone ownZone) {
+//
+//        this.uid                 = uid;
+//        this.checked             = checked;
+//        this.cornerTopRightX     = cornerTopRightX;
+//        this.cornerTopRightY     = cornerTopRightY;
+//        this.cornerTopLeftX      = cornerTopLeftX;
+//        this.cornerTopLeftY      = cornerTopLeftY;
+//        this.cornerBottomRightX  = cornerBottomRightX;
+//        this.cornerBottomRightY  = cornerBottomRightY;
+//        this.cornerBottomLeftX   = cornerBottomLeftX;
+//        this.cornerBottomLeftY   = cornerBottomLeftY;
+//        this.punktX              = punktX;
+//        this.punktY              = punktY;
+//        this.iP                  = iP;
+//        this.countPeers          = countPeers;
+//        this.ownZone             = ownZone;
+//   }
 
 
     /**
@@ -330,7 +330,7 @@ public class Node {
         return cornerTopRightX;
     }
 
-    private void setCornerTopRightX(double cornerTopRightX) {
+    public void setCornerTopRightX(double cornerTopRightX) {
         this.cornerTopRightX = cornerTopRightX;
     }
 
@@ -338,7 +338,7 @@ public class Node {
         return cornerTopRightY;
     }
 
-    private void setCornerTopRightY(double cornerTopRightY) {
+    public void setCornerTopRightY(double cornerTopRightY) {
         this.cornerTopRightY = cornerTopRightY;
     }
 
@@ -346,7 +346,7 @@ public class Node {
         return cornerTopLeftX;
     }
 
-    private void setCornerTopLeftX(double cornerTopLeftX) {
+    public void setCornerTopLeftX(double cornerTopLeftX) {
         this.cornerTopLeftX = cornerTopLeftX;
     }
 
@@ -354,7 +354,7 @@ public class Node {
         return cornerTopLeftY;
     }
 
-    private void setCornerTopLeftY(double cornerTopLeftY) {
+    public void setCornerTopLeftY(double cornerTopLeftY) {
         this.cornerTopLeftY = cornerTopLeftY;
     }
 
@@ -362,7 +362,7 @@ public class Node {
         return cornerBottomRightX;
     }
 
-    private void setCornerBottomRightX(double cornerBottomRightX) {
+    public void setCornerBottomRightX(double cornerBottomRightX) {
         this.cornerBottomRightX = cornerBottomRightX;
     }
 
@@ -370,7 +370,7 @@ public class Node {
         return cornerBottomRightY;
     }
 
-    private void setCornerBottomRightY(double cornerBottomRightY) {
+    public void setCornerBottomRightY(double cornerBottomRightY) {
         this.cornerBottomRightY = cornerBottomRightY;
     }
 
@@ -378,7 +378,7 @@ public class Node {
         return cornerBottomLeftX;
     }
 
-    private void setCornerBottomLeftX(double cornerBottomLeftX) {
+    public void setCornerBottomLeftX(double cornerBottomLeftX) {
         this.cornerBottomLeftX = cornerBottomLeftX;
     }
 
@@ -386,18 +386,18 @@ public class Node {
         return cornerBottomLeftY;
     }
 
-    private void setCornerBottomLeftY(double cornerBottomLeftY) {
+    public void setCornerBottomLeftY(double cornerBottomLeftY) {
         this.cornerBottomLeftY = cornerBottomLeftY;
     }
 
 
-    public boolean isChecked() {
-        return checked;
-    }
-
-    public void setChecked (boolean checked) {
-        this.checked = checked;
-    }
+//    public boolean isChecked() {
+//        return checked;
+//    }
+//
+//    public void setChecked (boolean checked) {
+//        this.checked = checked;
+//    }
 
 
     public double getPunktX() {

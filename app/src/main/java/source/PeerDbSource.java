@@ -4,16 +4,27 @@ package source;
  * Created by en on 13.08.17.
  */
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import model.*;
+import source.DatabaseManager;
+import source.DateiMemoDbHelper;
+import model.Node;
+import model.ForeignData;
+import model.Neighbour;
+import model.OwnDataMemo;
+import model.PeerMemo;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import java.util.Objects;
 
 public class PeerDbSource {
     private static final String LOG_TAG = PeerDbSource.class.getSimpleName();
@@ -136,7 +147,6 @@ public class PeerDbSource {
     *
     *
     * */
-    // hier String IP und UID als parameter übergeben, kein Objekt
     public int createPeerMemo(PeerMemo peerMemo) {
         database = DatabaseManager.getInstance().openDatabase();
         ContentValues values = new ContentValues();
@@ -228,17 +238,18 @@ public class PeerDbSource {
     *
     * */
     public int getPeersCount() {
+        database = DatabaseManager.getInstance().openDatabase();
         String countQuery = "SELECT * FROM " + DateiMemoDbHelper.TABLE_PEER_LIST;
         Cursor cursor = database.rawQuery(countQuery, null);
 
         int count = cursor.getCount();
         cursor.close();
-
+        DatabaseManager.getInstance().closeDatabase();
         // return count
         return count;
     }
 
-    //todo brauch man das überhaupt?!
+
     public int decreaseCountPeers () {
         if (getPeersCount() == 0){
             System.out.println("No more Peers");
@@ -296,6 +307,8 @@ public class PeerDbSource {
     *
     * */
     public double getUidPeer() {
+        database = DatabaseManager.getInstance().openDatabase();
+        DatabaseManager.getInstance().closeDatabase();
         return dateiMemoDbSource.getUid();
     }
 
@@ -411,3 +424,4 @@ public class PeerDbSource {
 //
 //        return peerMemo;
 //    }
+

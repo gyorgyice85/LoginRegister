@@ -1,8 +1,12 @@
 package model;
 
 
+
+
+/**/
 public class Neighbour {
 
+    //DateiMemo dateiMemo;
 
     private double cornerTopRightX;
     private double cornerTopRightY;
@@ -16,28 +20,30 @@ public class Neighbour {
     private double punktY;
     private String UIP;
     private double RTT;
-    private boolean checked;
+    //private boolean checked;
     private long uid;
+    //private long neighbour_id;
 
-     public Neighbour(long uid, boolean checked,
-                        double cornerTopRightX, double cornerTopRightY, double cornerTopLeftX, double cornerTopLeftY,
-                        double cornerBottomRightX, double cornerBottomRightY, double cornerBottomLeftX, double cornerBottomLeftY,
-                        double punktX, double punktY, String UIP, double RTT) {
-        this.uid = uid;
-        this.checked = checked;
-        this.cornerTopRightX = cornerTopRightX;
-        this.cornerTopRightY = cornerTopRightY;
-        this.cornerTopLeftX = cornerTopLeftX;
-        this.cornerTopLeftY = cornerTopLeftY;
-        this.cornerBottomRightX = cornerBottomRightX;
-        this.cornerBottomRightY = cornerBottomRightY;
-        this.cornerBottomLeftX = cornerBottomLeftX;
-        this.cornerBottomLeftY = cornerBottomLeftY;
-        this.punktX = punktX;
-        this.punktY = punktY;
-        this.UIP = UIP;
-        this.RTT = RTT;
-    }
+
+    //    public NeighborMemo(long uid, boolean checked,
+//                        double cornerTopRightX, double cornerTopRightY, double cornerTopLeftX, double cornerTopLeftY,
+//                        double cornerBottomRightX, double cornerBottomRightY, double cornerBottomLeftX, double cornerBottomLeftY,
+//                        double punktX, double punktY, String UIP, double RTT) {
+//        this.uid = uid;
+//        this.checked = checked;
+//        this.cornerTopRightX = cornerTopRightX;
+//        this.cornerTopRightY = cornerTopRightY;
+//        this.cornerTopLeftX = cornerTopLeftX;
+//        this.cornerTopLeftY = cornerTopLeftY;
+//        this.cornerBottomRightX = cornerBottomRightX;
+//        this.cornerBottomRightY = cornerBottomRightY;
+//        this.cornerBottomLeftX = cornerBottomLeftX;
+//        this.cornerBottomLeftY = cornerBottomLeftY;
+//        this.punktX = punktX;
+//        this.punktY = punktY;
+//        this.UIP = UIP;
+//        this.RTT = RTT;
+//    }
 
 //    public double getCornerTopRight() {
 //        return cornerTopRight;
@@ -71,35 +77,11 @@ public class Neighbour {
 //        this.cornerBottomLeft = cornerBottomLeft;
 //    }
 
-    public void setCornerBottomLeft(double x, double y)
-    {
-        setCornerBottomLeftX(x);
-        setCornerBottomLeftY(y);
-    }
-
-    public void setCornerBottomRight(double x, double y)
-    {
-        setCornerBottomRightX(x);
-        setCornerBottomRightY(y);
-    }
-
-    public void setCornerTopLeft(double x, double y)
-    {
-        setCornerTopLeftX(x);
-        setCornerTopLeftY(y);
-    }
-
-    public void setCornerTopRight(double x, double y)
-    {
-        setCornerTopRightX(x);
-        setCornerTopRightY(y);
-    }
-
     public double getCornerTopRightX() {
         return cornerTopRightX;
     }
 
-    private void setCornerTopRightX(double cornerTopRightX) {
+    public void setCornerTopRightX(double cornerTopRightX) {
         this.cornerTopRightX = cornerTopRightX;
     }
 
@@ -107,7 +89,7 @@ public class Neighbour {
         return cornerTopRightY;
     }
 
-    private void setCornerTopRightY(double cornerTopRightY) {
+    public void setCornerTopRightY(double cornerTopRightY) {
         this.cornerTopRightY = cornerTopRightY;
     }
 
@@ -115,7 +97,7 @@ public class Neighbour {
         return cornerTopLeftX;
     }
 
-    private void setCornerTopLeftX(double cornerTopLeftX) {
+    public void setCornerTopLeftX(double cornerTopLeftX) {
         this.cornerTopLeftX = cornerTopLeftX;
     }
 
@@ -123,7 +105,7 @@ public class Neighbour {
         return cornerTopLeftY;
     }
 
-    private void setCornerTopLeftY(double cornerTopLeftY) {
+    public void setCornerTopLeftY(double cornerTopLeftY) {
         this.cornerTopLeftY = cornerTopLeftY;
     }
 
@@ -131,7 +113,7 @@ public class Neighbour {
         return cornerBottomRightX;
     }
 
-    private void setCornerBottomRightX(double cornerBottomRightX) {
+    public void setCornerBottomRightX(double cornerBottomRightX) {
         this.cornerBottomRightX = cornerBottomRightX;
     }
 
@@ -139,7 +121,7 @@ public class Neighbour {
         return cornerBottomRightY;
     }
 
-    private void setCornerBottomRightY(double cornerBottomRightY) {
+    public void setCornerBottomRightY(double cornerBottomRightY) {
         this.cornerBottomRightY = cornerBottomRightY;
     }
 
@@ -147,7 +129,7 @@ public class Neighbour {
         return cornerBottomLeftX;
     }
 
-    private void setCornerBottomLeftX(double cornerBottomLeftX) {
+    public void setCornerBottomLeftX(double cornerBottomLeftX) {
         this.cornerBottomLeftX = cornerBottomLeftX;
     }
 
@@ -155,7 +137,7 @@ public class Neighbour {
         return cornerBottomLeftY;
     }
 
-    private void setCornerBottomLeftY(double cornerBottomLeftY) {
+    public void setCornerBottomLeftY(double cornerBottomLeftY) {
         this.cornerBottomLeftY = cornerBottomLeftY;
     }
 
@@ -191,13 +173,13 @@ public class Neighbour {
         this.RTT = RTT;
     }
 
-    public boolean isChecked() {
-        return checked;
-    }
-
-    public void setChecked(boolean checked) {
-        this.checked = checked;
-    }
+//    public boolean isChecked() {
+//        return checked;
+//    }
+//
+//    public void setChecked(boolean checked) {
+//        this.checked = checked;
+//    }
 
     public long getUid() {
         return uid;
@@ -207,9 +189,17 @@ public class Neighbour {
         this.uid = uid;
     }
 
+//    public long getNeighbour_id() {
+//        return neighbour_id;
+//    }
+//
+//    public void setNeighbour_id(long neighbour_id) {
+//        this.neighbour_id = neighbour_id;
+//    }
+
     @Override
     public String toString() {
-        String output = uid + " -- " + UIP +
+        String output = uid + " -- " + UIP + " -- " + //neighbour_id +
                 "\nCorner top Left : x -> "+ cornerTopLeftX + " -- y -> "+ cornerTopLeftY +
                 "\nCorner top Right : x -> "+ cornerTopRightX + " -- y -> "+ cornerTopRightY +
                 "\nCorner Bottom Left : x -> "+ cornerBottomLeftX + " -- y -> "+ cornerBottomLeftY +
@@ -218,4 +208,6 @@ public class Neighbour {
                 "\n RTT : "+ RTT;
         return output;
     }
+
+
 }

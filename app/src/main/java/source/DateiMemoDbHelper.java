@@ -1,25 +1,23 @@
 package source;
 
+
 /**
  * Created by en on 15.06.17.
  */
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 import app.App;
 
+import java.security.PublicKey;
 
 public class DateiMemoDbHelper extends SQLiteOpenHelper{
 
     private static final String LOG_TAG = DateiMemoDbHelper.class.getSimpleName();
 
-    //Konstruktor
-    //SUPER verwendet man, weil unsere "helper" ist eine Ableitung von SQLiteOpenHelper
-    public DateiMemoDbHelper( ) {
-        super(App.getContext(), DB_NAME, null, DB_VERSION);
-    }
+
 
 //-------------Wie man eine verbindung zu dem SQL macht-------------------------------
 
@@ -40,17 +38,17 @@ public class DateiMemoDbHelper extends SQLiteOpenHelper{
 
 
     public static final String COLUMN_UID = "_uid";
-    public static final String COLUMN_PID = "peer_id";
-    public static final String COLUMN_OID = "own_id";
-    public static final String COLUMN_FID = "foreign_id";
-    public static final String COLUMN_NID = "neighbor_id";
+    public static final String COLUMN_PID = "peer_id_foreign";
+    public static final String COLUMN_OID = "own_id_foreign";
+    public static final String COLUMN_FID = "foreign_id_foreign";
+    public static final String COLUMN_NID = "neighbour_id_foreign";
     //    public static final String COLUMN_USERNAME = "username";
 //    public static final String COLUMN_PASSWORD = "password";
     public static final String COLUMN_IP = "IP";
     public static final String COLUMN_COUNTPEERS = "CountPeers";
 
 
-
+    public static final String COLUMN_NEIGHBOUR_ID = "neighbour_id";
     public static final String COLUMN_PEERID = "peerId";
     public static final String COLUMN_PEERIP = "peerIp";
 
@@ -86,7 +84,7 @@ public class DateiMemoDbHelper extends SQLiteOpenHelper{
 
     public static final String SQL_CREATE_TABLE_DATEI =
             "CREATE TABLE " + TABLE_DATEI_LIST +
-                    "(" + COLUMN_UID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "(" + COLUMN_UID + " INTEGER PRIMARY KEY," +
                     COLUMN_CORNERTOPRIGHTX + " REAL NOT NULL," +
                     COLUMN_CORNERTOPRIGHTY + " REAL NOT NULL," +
                     COLUMN_CORNERTOPLEFTX + " REAL NOT NULL," +
@@ -98,17 +96,18 @@ public class DateiMemoDbHelper extends SQLiteOpenHelper{
                     COLUMN_PUNKTX + " REAL NOT NULL," +
                     COLUMN_PUNKTY + " REAL NOT NULL," +
                     COLUMN_IP + " TEXT NOT NULL," +
-                    COLUMN_COUNTPEERS + " INTEGER NOT NULL )" ;
+                    COLUMN_COUNTPEERS + " INTEGER NOT NULL );" ;
 
     public static final String SQL_CREATE_TABLE_PEERS =
             "CREATE TABLE " + TABLE_PEER_LIST +
-                    "(" + COLUMN_PEERIP + " TEXT PRIMARY KEY AUTOINCREMENT," +
-                    COLUMN_PEERID + " INTEGER NOT NULL," +
-                    "FOREIGN KEY ("+ COLUMN_PID +") REFERENCES "+ TABLE_DATEI_LIST +"("+ COLUMN_UID + "))";
+                    " ( " + COLUMN_PEERID + " INTEGER PRIMARY KEY," +
+                    COLUMN_PEERIP + " TEXT NOT NULL," +
+                    COLUMN_PID + " INTEGER NOT NULL );";
 
     public static final String SQL_CREATE_TABLE_NEIGBHORS =
             "CREATE TABLE " + TABLE_NEIGHBOR_LIST +
-                    "(" + COLUMN_UIP + " TEXT PRIMARY KEY AUTOINCREMENT," +
+                    " ( " + //COLUMN_NEIGHBOUR_ID + " INTEGER PRIMARY KEY," +
+                    COLUMN_UIP + " TEXT NOT NULL," +
                     COLUMN_CORNERTOPRIGHTX + " REAL NOT NULL," +
                     COLUMN_CORNERTOPRIGHTY + " REAL NOT NULL," +
                     COLUMN_CORNERTOPLEFTX + " REAL NOT NULL," +
@@ -120,20 +119,20 @@ public class DateiMemoDbHelper extends SQLiteOpenHelper{
                     COLUMN_PUNKTX + " REAL NOT NULL," +
                     COLUMN_PUNKTY + " REAL NOT NULL," +
                     COLUMN_RTT + " REAL NOT NULL," +
-                    "FOREIGN KEY ("+ COLUMN_NID +") REFERENCES "+ TABLE_DATEI_LIST +"("+ COLUMN_UID + "))";
+                    COLUMN_NID + " INTEGER NOT NULL );";
 
     public static final String SQL_CREATE_TABLE_OWNDATAS =
             "CREATE TABLE " + TABLE_OWNDATA_LIST +
-                    "(" + COLUMN_FILEID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    COLUMN_PUNKTX + " REAL NOT NULL," +
-                    COLUMN_PUNKTY + " REAL NOT NULL," +
-                    "FOREIGN KEY ("+ COLUMN_OID + ") REFERENCES "+ TABLE_DATEI_LIST +"("+ COLUMN_UID + "))" ;
+                    " ( " + COLUMN_FILEID + " INTEGER PRIMARY KEY," +
+                    COLUMN_OID + " INTEGER NOT NULL );";
 
     public static final String SQL_CREATE_TABLE_FOREIGNDATAS =
             "CREATE TABLE " + TABLE_FOREIGNDATA_LIST +
-                    "(" + COLUMN_FOTOID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    COLUMN_IP + "TEXT NOT NULL," +
-                    "FOREIGN KEY ("+ COLUMN_FID +") REFERENCES "+ TABLE_DATEI_LIST +"("+ COLUMN_UID + "))" ;
+                    " ( " + COLUMN_FOTOID + " INTEGER PRIMARY KEY," +
+                    COLUMN_PUNKTX + " REAL NOT NULL," +
+                    COLUMN_PUNKTY + " REAL NOT NULL," +
+                    COLUMN_IP + " TEXT NOT NULL," +
+                    COLUMN_FID + " INTEGER NOT NULL );";
 
     public static final String SQL_DROP_DATEI = "DROP TABLE IF EXISTS " + TABLE_DATEI_LIST;
     public static final String SQL_DROP_PEERS = "DROP TABLE IF EXISTS " + TABLE_PEER_LIST;
@@ -144,24 +143,42 @@ public class DateiMemoDbHelper extends SQLiteOpenHelper{
     //-------------------------------------------------------------------------------
 
 
+    //Konstruktor
+    //SUPER verwendet man, weil unsere "helper" ist eine Ableitung von SQLiteOpenHelper
+    public DateiMemoDbHelper( ) {
+        super(App.getContext(), DB_NAME, null, DB_VERSION);
+    }
 
+
+    //enable foreign key
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (!db.isReadOnly()) {
+            // Enable foreign key constraints
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
+    }
 
     // Die onCreate-Methode wird nur aufgerufen, falls die Datenbank noch nicht existiert
     @Override
     public void onCreate(SQLiteDatabase db) {
-        try {
-            Log.d(LOG_TAG, "Die Tabelle wird mit SQL-Befehl: " + SQL_CREATE_TABLE_DATEI + SQL_CREATE_TABLE_PEERS
-                    + SQL_CREATE_TABLE_NEIGBHORS + SQL_CREATE_TABLE_OWNDATAS + SQL_CREATE_TABLE_FOREIGNDATAS + " angelegt.");
-            //Erstellung eine Datenbank mit String "SQL_CREATE" als Parameter
-            db.execSQL(SQL_CREATE_TABLE_DATEI);
-            db.execSQL(SQL_CREATE_TABLE_PEERS);
-            db.execSQL(SQL_CREATE_TABLE_NEIGBHORS);
-            db.execSQL(SQL_CREATE_TABLE_OWNDATAS);
-            db.execSQL(SQL_CREATE_TABLE_FOREIGNDATAS);
+        //1. Info
+        Log.d(LOG_TAG, "Die Tabelle wird mit SQL-Befehl: " + SQL_CREATE_TABLE_DATEI + SQL_CREATE_TABLE_PEERS
+                + SQL_CREATE_TABLE_NEIGBHORS + SQL_CREATE_TABLE_OWNDATAS + SQL_CREATE_TABLE_FOREIGNDATAS + " angelegt.");
+
+        //2. Enable foreign key
+        if (!db.isReadOnly()) {
+            // Enable foreign key constraints
+            db.execSQL("PRAGMA foreign_keys=ON;");
         }
-        catch (Exception ex) {
-            Log.e(LOG_TAG, "Fehler beim Anlegen der Tabelle: " + ex.getMessage());
-        }
+
+        //3. Erstellung eine Datenbank mit String "SQL_CREATE" als Parameter
+        db.execSQL(SQL_CREATE_TABLE_DATEI);
+        db.execSQL(SQL_CREATE_TABLE_PEERS);
+        db.execSQL(SQL_CREATE_TABLE_NEIGBHORS);
+        db.execSQL(SQL_CREATE_TABLE_OWNDATAS);
+        db.execSQL(SQL_CREATE_TABLE_FOREIGNDATAS);
     }
 
     //wird zur Aktualisierung einer bereits bestehenden Datenbank benutzt
@@ -178,3 +195,5 @@ public class DateiMemoDbHelper extends SQLiteOpenHelper{
         onCreate(db);
     }
 }
+
+//"FOREIGN KEY ("+ COLUMN_PID +") REFERENCES "+ TABLE_DATEI_LIST +"("+ COLUMN_UID + "));";
