@@ -40,4 +40,10 @@ public class Corner {
     public double getY() {
         return y;
     }
+
+    public String toString(){
+
+        String message = x + "," +y;
+        return message;
+    }
 }

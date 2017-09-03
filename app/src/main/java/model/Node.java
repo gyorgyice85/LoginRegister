@@ -1,5 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import source.NeighborDbSource;
 /**
  * Created by en on 15.06.17.
@@ -25,8 +29,10 @@ public class Node {
     private String iP;
     private int    countPeers;
     private boolean checked;
-    Neighbour neighbour;
+    private Neighbour neighbour;
     private Zone ownZone;
+    private ArrayList<Node> peers;
+    private HashMap<Integer, String> fileId;
 
     public Node ()
     {
@@ -35,26 +41,10 @@ public class Node {
 
     /**
      *
-     * @param uid
-     * @param checked
-     * @param cornerTopRightX
-     * @param cornerTopRightY
-     * @param cornerTopLeftX
-     * @param cornerTopLeftY
-     * @param cornerBottomRightX
-     * @param cornerBottomRightY
-     * @param cornerBottomLeftX
-     * @param cornerBottomLeftY
-     * @param punktX
-     * @param punktY
-     * @param iP
-     * @param countPeers
+     *
      */
-//    public Node(long uid, boolean checked,
-//                     double cornerTopRightX, double cornerTopRightY, double cornerTopLeftX, double cornerTopLeftY,
-//                     double cornerBottomRightX, double cornerBottomRightY, double cornerBottomLeftX, double cornerBottomLeftY,
-//                     double punktX, double punktY, String iP, int countPeers, Zone ownZone) {
-//
+    public Node(Zone ownZone) {
+
 //        this.uid                 = uid;
 //        this.checked             = checked;
 //        this.cornerTopRightX     = cornerTopRightX;
@@ -69,8 +59,10 @@ public class Node {
 //        this.punktY              = punktY;
 //        this.iP                  = iP;
 //        this.countPeers          = countPeers;
-//        this.ownZone             = ownZone;
-//   }
+        this.ownZone             = ownZone;
+        peers = new ArrayList<>();
+        fileId = new HashMap<>();
+   }
 
 
     /**
@@ -122,8 +114,6 @@ public class Node {
 
         return umgekehrt;
     }
-
-
 
 
     /**
@@ -240,10 +230,6 @@ public class Node {
         return index;
     }
 
-
-
-
-
     public void downloadOwnData(){
         // TODO: 28.08.2017  checken ob OwnData( auch wirklich die Bilder)
     }
@@ -270,20 +256,71 @@ public class Node {
         //// TODO: 15.08.2017 nach update der eigenen PeersDB muss überprüft werden ob die Anzahl Peers nun 3 beträgt, falls dies der Fall ist => Split
     }
 
-    public void increasePeersCount(){
-        if(checkIfMaxPeersCount()){
+//    public void increasePeersCount(){
+//        if(checkIfMaxPeersCount()){
 
-        }else{
-            countPeers++;
+//        }else{
+//            countPeers++;
+//        }
+//    }
+//    public void decreasePeersCount(){
+//        if(countPeers < 1){
+
+//        }else{
+//            countPeers--;
+//        }
+//    }
+
+    /**
+     * Adds a new peer to this node and its current peers. It also inserts all fotos into the new peer node.
+     * If the number of peers would get larger than MAX_PEERS, the zone will be split, and the nodes updated.
+     *
+     * @param node the new peer of the node
+     */
+    public void addPeer(Node node) {
+
+        if (!node.getMyZone().equals(ownZone)) {
+            throw new IllegalArgumentException("ERROR: " + node + " has a different zone than this nodes zone.");
+        }
+
+        // register new peer at this node's the current peers
+        for (Node peer : peers) {
+            peer.peers.add(node);
+            peer.countPeers++;
+            node.peers.add(peer);
+            node.countPeers++;
+        }
+
+        // register new peer at this node
+        this.peers.add(node);
+        this.countPeers++;
+        node.peers.add(this);
+        node.countPeers++;
+
+
+        // inserts all fotos into the new peer node
+        node.fileId.putAll(fileId);
+
+        if (countPeers == maxPeers + 1) {
+//            splitZone();
         }
     }
-    public void decreasePeersCount(){
-        if(countPeers < 1){
 
-        }else{
-            countPeers--;
+    public void removePeer(Node node) {
+        if (!peers.contains(node)) {
+            throw new IllegalArgumentException("ERROR: this node does not contain " + node);
+        }
+
+        peers.remove(node);
+        countPeers--;
+    }
+
+    private void removePeers(List<Node> nodes) {
+        for (Node node : nodes) {
+            removePeer(node);
         }
     }
+
 
     // TODO: 15.08.2017 Vielleicht so implementieren das hier auch noch gecheckt wird ob gesplittet wird
     private boolean checkIfMaxPeersCount(){
