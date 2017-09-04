@@ -40,4 +40,8 @@ public class Corner {
     public double getY() {
         return y;
     }
+
+    public String toString() {
+        return getX() + ", " + getY();
+    }
 }

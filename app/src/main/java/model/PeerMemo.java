@@ -4,7 +4,7 @@ package model;
 public class PeerMemo {
 
     private long uid;
-    private int peerId;
+    private long peerId;
     private String peerIp;
     private boolean checked;
 
@@ -27,11 +27,11 @@ public class PeerMemo {
         this.uid = uid;
     }
 
-    public int getPeerId() {
+    public long getPeerId() {
         return peerId;
     }
 
-    public void setPeerId(int peerId) {
+    public void setPeerId(long peerId) {
         this.peerId = peerId;
     }
 
@@ -53,7 +53,7 @@ public class PeerMemo {
     }
 
 
-    public int getLength(int zahl){
+    public int getLength(long zahl){
         String s = String.valueOf(zahl);
         return s.length();
     }

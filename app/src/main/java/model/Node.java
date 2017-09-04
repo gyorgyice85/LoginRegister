@@ -1,5 +1,7 @@
 package model;
 
+import source.DatabaseManager;
+import source.DateiMemoDbSource;
 import source.NeighborDbSource;
 /**
  * Created by en on 15.06.17.
@@ -27,6 +29,8 @@ public class Node {
     private boolean checked;
     Neighbour neighbour;
     private Zone ownZone;
+    private DateiMemoDbSource dateiMemoDbSource;
+    private PeerMemo peerMemo;
 
     public Node ()
     {
@@ -70,6 +74,7 @@ public class Node {
         this.iP                  = iP;
         this.countPeers          = countPeers;
         this.ownZone             = ownZone;
+
    }
 
 
@@ -219,8 +224,12 @@ public class Node {
      */
     private void informPeersAboutYourself(String ip) {
         //// TODO: 14.08.2017    user.getUid(); von DB, user.getIP von DB
-        //// TODO: 14.08.2017 sende an alle deine Peers ein setPeer mit diesen Informationen
+        long uid = dateiMemoDbSource.getUid();
 
+
+        //// TODO: 14.08.2017 sende an alle deine Peers ein setPeer mit diesen Informationen
+        peerMemo.setPeerId(uid);
+        peerMemo.setPeerIp(ip);
     }
     /**
      * Vergleiche alle Distanzen der Nachbarn
