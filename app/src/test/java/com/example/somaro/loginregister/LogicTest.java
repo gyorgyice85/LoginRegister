@@ -86,7 +86,7 @@ public class LogicTest {
             node.setCornerTopRight(0.9, 0.9);
             cornerBottomLeft = new Corner(0.7,0.3);
             cornerBottomRight = new Corner(0.8,0.3);
-            cornerTopLeft = new Corner(0.7,0.8);
+            cornerTopLeft = new Corner(0.7 ,0.8);
             cornerTopRight = new Corner(0.8,0.8);
             zone = new Zone(cornerTopLeft,cornerTopRight,cornerBottomLeft,cornerBottomRight);
 
