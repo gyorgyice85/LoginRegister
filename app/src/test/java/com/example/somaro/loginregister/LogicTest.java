@@ -26,10 +26,6 @@ public class LogicTest {
         Corner cornerTopRight;
         Zone zone;
         try {
-            node.setCornerBottomLeft(0.0, 0.0);
-            node.setCornerBottomRight(1.0, 0.0);
-            node.setCornerTopLeft(0.0, 1.0);
-            node.setCornerTopRight(1.0, 1.0);
             cornerBottomLeft = new Corner(0.0,0.0);
             cornerBottomRight = new Corner(1.0,0.0);
             cornerTopLeft = new Corner(0.0,1.0);
@@ -80,10 +76,6 @@ public class LogicTest {
         Corner cornerTopRight;
         Zone zone;
         try {
-            node.setCornerBottomLeft(0.6, 0.4);
-            node.setCornerBottomRight(0.9, 0.4);
-            node.setCornerTopLeft(0.6, 0.9);
-            node.setCornerTopRight(0.9, 0.9);
             cornerBottomLeft = new Corner(0.7,0.3);
             cornerBottomRight = new Corner(0.8,0.3);
             cornerTopLeft = new Corner(0.7 ,0.8);
