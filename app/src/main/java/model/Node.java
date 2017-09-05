@@ -1,17 +1,42 @@
 package model;
 
+import android.util.Log;
+
+import org.json.JSONException;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import bootstrap.AllIPsActivity;
+import connection.Client;
 import source.DatabaseManager;
 import source.DateiMemoDbSource;
 import source.NeighborDbSource;
 /**
- * Created by en on 15.06.17.
- * Class haupt daten
+ *
  */
 
 public class Node {
+    /**
+     * Mit dieser Methode findet ein neuer Knoten einen Einstiegspunkt in das CAN, indem er den Bootstrapserver nach einer IP anfragt
+     */
+    private static void requestJoin() throws JSONException {
+        AllIPsActivity all = new AllIPsActivity();
+        if(all.ipsList.isEmpty()){
+            Log.e("Fehler " , "Ist leer!");
+        }else{
+            for (int i = 0; i <all.ipsList.size(); i++){
+                Log.d("Inhalt ", all.ipsList.get(i).toString());
+            }
+
+        }
+        //// TODO: 15.08.2017 getBootsTrapIP() Methode
+        //// TODO: 15.08.2017 nun Verbindung zu dieser IP herstellen und routing-Anfrage mit(eigener IP und x ,y Werten, id und isNode als Parameter)
+    }
 
     private static final int maxPeers= 3;
-    private static NeighborDbSource nDB;
+    private NeighborDbSource nDB;
+    private static final long DIVIDER=2552552552l;
 
     private long   uid;
     private double cornerTopRightX;
@@ -27,10 +52,10 @@ public class Node {
     private String iP;
     private int    countPeers;
     private boolean checked;
-    Neighbour neighbour;
     private Zone ownZone;
     private DateiMemoDbSource dateiMemoDbSource;
     private PeerMemo peerMemo;
+
 
     public Node ()
     {
@@ -58,7 +83,6 @@ public class Node {
                      double cornerTopRightX, double cornerTopRightY, double cornerTopLeftX, double cornerTopLeftY,
                      double cornerBottomRightX, double cornerBottomRightY, double cornerBottomLeftX, double cornerBottomLeftY,
                      double punktX, double punktY, String iP, int countPeers, Zone ownZone) {
-
         this.uid                 = uid;
         this.checked             = checked;
         this.cornerTopRightX     = cornerTopRightX;
@@ -74,7 +98,6 @@ public class Node {
         this.iP                  = iP;
         this.countPeers          = countPeers;
         this.ownZone             = ownZone;
-
    }
 
 
@@ -87,10 +110,10 @@ public class Node {
     public static double hashX(String ip) {
         double x = ip.hashCode();
         if(x < 0){
-            x = x/(-2552552552l);
+            x = x/(-DIVIDER);
             return x;
         }else{
-            x = x/2552552552l;
+            x = x/DIVIDER;
             return x;
         }
     }
@@ -105,10 +128,10 @@ public class Node {
         String hash2 = umkehren(ip);
         double y = hash2.hashCode();
         if(y < 0){
-            y = y/(-2552552552l);
+            y = y/(-DIVIDER);
             return y;
         }else{
-            y = y/2552552552l;
+            y = y/DIVIDER;
             return y;
         }
     }
@@ -186,6 +209,7 @@ public class Node {
 
         }
         int index = compareValues(distances);
+
         //// TODO: 14.08.2017 Verbindungsaufbau zu dem Neighbour der an Stelle == Index steht und IP und x,y-Werte übertragen so das dieser weiter routen kann
     }
 
@@ -231,7 +255,7 @@ public class Node {
      * @param ip
      */
     private void informPeersAboutYourself(String ip) {
-        //// TODO: 14.08.2017    user.getUid(); von DB, user.getIP von DB
+        //// TODO: 0114.08.27    user.getUid(); von DB, user.getIP von DB
         long uid = dateiMemoDbSource.getUid();
 
 
@@ -264,18 +288,11 @@ public class Node {
         // TODO: 28.08.2017  checken ob OwnData( auch wirklich die Bilder)
     }
 
-    public void requestJoin_for_GUI()
-    {
+    public void requestJoin_for_GUI() throws JSONException {
         requestJoin();
     }
 
-    /**
-     * Mit dieser Methode findet ein neuer Knoten einen Einstiegspunkt in das CAN, indem er den Bootstrapserver nach einer IP anfragt
-     */
-    private void requestJoin(){
-        //// TODO: 15.08.2017 getBootsTrapIP() Methode
-        //// TODO: 15.08.2017 nun Verbindung zu dieser IP herstellen und routing-Anfrage mit(eigener IP und x ,y Werten, id und isNode als Parameter)
-    }
+
 
     /**
      * Methode die aufgerufen wird wenn das routing beendet ist und die DB's des neuen Knoten updaten muss
@@ -284,6 +301,7 @@ public class Node {
     private void replyToRequest(String ip){
         //// TODO: 15.08.2017 Verbindung zu IP herstellen, und setPeer und setNeighbour aufrufen auf diesem Knoten(mit den eigenen Peers und Neighbour-Werten)
         //// TODO: 15.08.2017 nach update der eigenen PeersDB muss überprüft werden ob die Anzahl Peers nun 3 beträgt, falls dies der Fall ist => Split
+        // TODO: 05.09.2017 Node erstellen. und an IP senden
     }
 
     public void increasePeersCount(){
@@ -470,4 +488,10 @@ public class Node {
                 "\nCorner CountPeers : "+ countPeers;
         return output;
     }
+
+    public static void main(String [] args) throws JSONException {
+        requestJoin();
+    }
+
+
 }

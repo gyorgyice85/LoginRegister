@@ -1,9 +1,8 @@
 package connection;
-package helper;
 
-import helper.Corner;
-import helper.User;
-import helper.Node;
+import model.Corner;
+import model.Node;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,9 +27,8 @@ public class Serialization {
 	Corner topRightCorner;
 	Corner bottomLeftCorner;
 	Corner bottomRightCorner;
-	User user;
 	int peersCount;
-	Node node = new Node(topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner, user, peersCount);
+	//Node node = new Node(topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner, peersCount);
 
 	
 	
@@ -41,7 +39,6 @@ public class Serialization {
 	 * @param node 	= einzuspeisender Knoten/Node
 	 * @return		= ByteArray buffer, in den das Knoten/Node Objekt eingespeist wurde
 	 */
-	
 	protected byte[] serializeNode(Node node){
 		
 		byte[] buffer = null;
@@ -72,7 +69,6 @@ public class Serialization {
 	 * @param buffer	= ByteArray, aus dem Knoten/Node Objekt hergestellt werden soll
 	 * @return			= Knoten/Node
 	 */
-	
 	protected Node deserializdeNode(byte[] buffer){
 		
 		Node node = null;
@@ -143,8 +139,10 @@ public class Serialization {
 	 * @throws IOException						= Fehler beim Input/Output
 	 */
 	public void imageDeSerializer(byte[] buffer, File destination)throws IOException{
-			
-			try(FileOutputStream fos = new FileOutputStream(destination)){
+
+
+			try{
+				FileOutputStream fos = new FileOutputStream(destination);
 				fos.write(buffer);
 				fos.close();
 			}catch (Exception e){
@@ -173,7 +171,7 @@ public class Serialization {
 			byte[] bufferBody = imageSerializer(file);
 			
 			byte[] bufferTarget = new byte[RESERVED_BYTES_FOR_METHOD_CALL + bufferBody.length];
-			
+			//zusammensetzten der arrays
 			System.arraycopy(bufferHeader, 0, bufferTarget, 0, 1);
 			System.arraycopy(bufferBody, 0, bufferTarget, 1, bufferBody.length -1);
 			
@@ -186,13 +184,9 @@ public class Serialization {
 	 * Methode fillNodeByteArray, zum Fuellen eines HilfsByteArrays
 	 * 		Der Header (byte[0]) ist fuer den MethodenAufrufNamen reserviert
 	 * 		Im Body (ab byte[1]) stehen die eigentlichen Nutzdaten
-	 * 
-	 * @param file		= die File, die in das HilfsByteArray geschrieben werden soll
+	 *
 	 * @return			= das erzeugte HilfsByteArray
 	 */
-	
-	
-	
 	protected byte[] fillNodeByteArray(Node node){
 		
 		byte methodName = (byte) STR_SEND_NODE;
@@ -217,7 +211,6 @@ public class Serialization {
 	 * @param buffer		= das HilfsByteArray
 	 * @return				= der Header (= die MethodenAufrufZiffer)
 	 */
-
 	protected int getByteHeader(byte[] buffer){
 		int methodName = buffer[0]; 
 		
@@ -232,7 +225,6 @@ public class Serialization {
 	 * @param buffer  		= das HilfsByteArray
 	 * @return				= den Body/die Nutzdaten als ByteArray
 	 */
-	
 	protected byte[] getByteData(byte[] buffer){
 		
 		byte[] bufferBody = new byte[buffer.length -1];

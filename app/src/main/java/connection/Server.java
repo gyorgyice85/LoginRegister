@@ -1,5 +1,6 @@
 package connection;
-package helper;
+
+import java.net.ServerSocket;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -28,8 +29,6 @@ public class Server {
 	 * @return					= ByteArray, das gesendet wurde
 	 * @throws IOException		= Fehler bei Input/Output
 	 */
-	
-	
 	protected byte[] receiveByteArray(ServerSocket serverSocket, Socket socket) throws IOException{
 		
 		byte[] buffer = null;
@@ -66,17 +65,12 @@ public class Server {
 	 * @param buffer 			= das ByteArray, das konvertiert werden soll
 	 * @return 					= die File/das Image
 	 */
-	
 	protected void saveFileFromByteArray(byte[] buffer, File file){
-		
 		try{
 			serialization.imageDeSerializer(buffer, file);
-			
 		} catch(IOException e){
 			e.printStackTrace();
 		}
-		
-
 	}
 	
 	

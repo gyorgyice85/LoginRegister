@@ -1,4 +1,5 @@
 package bootstrap;
+
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -18,17 +19,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import model.Node;
-
 public class AllIPsActivity extends ListActivity {
 
     // Progress Dialog
     private ProgressDialog pDialog;
-    private String[] ipList;
+
     // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
 
-    ArrayList<HashMap<String, String>> ipsList;
+    public ArrayList<HashMap<String, String>> ipsList;
 
     // url to get all IPs
     private static String url_all_ips = "https://axelczuck.000webhostapp.com/get_all_bootstrap.php";
@@ -47,6 +46,7 @@ public class AllIPsActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         // Hashmap for ListView
         ipsList = new ArrayList<>();
 
@@ -58,12 +58,12 @@ public class AllIPsActivity extends ListActivity {
     /**
      * Background Async Task to Load all ips by making HTTP Request
      * */
-    public class LoadAllIPs extends AsyncTask<String, String, String> {
+    class LoadAllIPs extends AsyncTask<String, String, String> {
 
         /**
          * Before starting background thread Show Progress Dialog
          * */
-        @Override
+       /* @Override
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(AllIPsActivity.this);
@@ -71,7 +71,7 @@ public class AllIPsActivity extends ListActivity {
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
             pDialog.show();
-        }
+        }*/
         /**
          * getting all IPs from url with a GET-Request
          * */
@@ -96,7 +96,7 @@ public class AllIPsActivity extends ListActivity {
 
                 // Getting Array of IPs
                 ips = jsonGET.getJSONArray(TAG_DB);
-                ipList = new String[ips.length()];
+
                 // looping through All IPs
                 for (int i = 0; i < ips.length(); i++) {
                     JSONObject c = ips.getJSONObject(i);
@@ -106,7 +106,15 @@ public class AllIPsActivity extends ListActivity {
                     //Retrieved the correct IPs?
                     Log.d("Single IPs: ", ip);
 
-                    ipList[i] = ip;
+                    // creating new HashMap
+                    HashMap<String, String> map = new HashMap<>();
+
+                    // adding each IP to HashMap
+                    map.put(TAG_IP, ip);
+
+
+                    // adding HashList to ArrayList
+                    ipsList.add(map);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -115,47 +123,30 @@ public class AllIPsActivity extends ListActivity {
             return null;
         }
 
-
-        public String[] getInitializedIpList(){
-            doInBackground("");
-            return getIpList();
-
-        }
         /**
          * After completing background task Dismiss the progress dialog
-         * **/
-        /*
+         * *
         protected void onPostExecute(String file_url) {
             // dismiss the dialog after getting all IPs
-            pDialog.dismiss();
+            *//*pDialog.dismiss();
             // updating UI from Background Thread and create ListView
             runOnUiThread(new Runnable() {
                 public void run() {
-
-                     // Updating parsed JSON data into ListView
-
+                    *//**//**
+             * Updating parsed JSON data into ListView
+             * *//**//*
                     ListAdapter adapter = new SimpleAdapter(
                             AllIPsActivity.this, ipsList,
                             R.layout.list_item, new String[] { TAG_ID,
                             TAG_IP},
                             new int[] { R.id.pid, R.id.name });
                     // updating listView
-                    setListAdapter(adapter);
+                    setListAdapter(adapter);*//*
+
                 }
-            });
+            });*/
 
-        } */
+
 
     }
-    //Methode um die IP Liste zu bekommen
-    public String[] getIpList(){
-        return ipList;
-    }
-
-    public String[] start(){
-        LoadAllIPs allIPs = new LoadAllIPs();
-        return allIPs.getInitializedIpList();
-    }
-
-
 }

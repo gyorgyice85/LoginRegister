@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import model.Node;
+
 
 public class Client {
 
@@ -19,14 +21,13 @@ public class Client {
 	/**
 	 * Methode, um eine File/ein Image als ByteArray zu senden
 	 * 
-	 * @param ip							= IP Adressse des Empfängers
+
 	 * @param file							= die File/ das Image zum Senden
 	 * @uses imageSerializer				= Hilfsmethode, um eine File/ein Image als ByteArray wiederzugeben
 	 * @uses sendByteArray 					= Hilfsmethode, zum Senden eines ByteArrays
 	 * @throws UnknownHostException			= unbekannter Host
 	 * @throws IOException					= Fehler beim Input/Output
 	 */
-	
 	protected void sendImageAsByteArray(Socket socket, File file){
 		
 		this.socket = socket;
@@ -82,8 +83,7 @@ public class Client {
 	
 	/**
 	 * Methode, um ein Knoten/Node Objekt als ByteArray zu senden
-	 * 
-	 * @param ip						= IP Adresse des Empfaengers
+	 *
 	 * @param node						= der zu uebertragende Knoten/Node
 	 * @throws UnknownHostException		= Unknown Host
 	 * @throws IOException				= Fehler beim Input/Output
