@@ -127,15 +127,37 @@ public class Zone {
     public void split(Node node1, Node node2, Node node3, Node node4) {
 
         // we split the zone along the longest side
-        if (getLengthX(node1) > getLengthY(node1)) {
+        if (getLengthX(node1) >= getLengthY(node1)) {
 
-            double midX = x1 + getLengthX(node1) / 2.0;
+            double midX = getLengthX(node1) / 2.0;
             // set peers und neigbour und update Corner
+            node1.setCornerBottomRight(midX,node1.getCornerBottomRightY());
+            node1.setCornerTopRight(midX,node1.getCornerTopRightY());
+
+            node2.setCornerTopRight(midX,node2.getCornerTopRightY());
+            node2.setCornerBottomRight(midX,node2.getCornerBottomRightY());
+
+            node3.setCornerBottomLeft(midX, node3.getCornerBottomLeftY());
+            node3.setCornerTopLeft(midX,node3.getCornerTopLeftY());
+
+            node4.setCornerTopLeft(midX,node4.getCornerTopLeftY());
+            node4.setCornerBottomLeft(midX,node4.getCornerBottomLeftY());
 
         } else {
 
-            double midY = y1 + getLengthY(node1) / 2.0;
+            double midY =  getLengthY(node1) / 2.0;
             // set peers und neigbour und update Corner
+            node1.setCornerTopRight(node1.getCornerTopRightX(),midY);
+            node1.setCornerTopLeft(node1.getCornerTopRightX(),midY);
+
+            node2.setCornerBottomLeft(node2.getCornerBottomLeftX(),midY);
+            node2.setCornerBottomRight(node2.getCornerBottomRightX(),midY);
+
+            node3.setCornerTopRight(node3.getCornerTopRightX(),midY);
+            node3.setCornerTopLeft(node3.getCornerTopLeftX(),midY);
+
+            node4.setCornerBottomRight(node4.getCornerBottomRightX(),midY);
+            node4.setCornerBottomLeft(node4.getCornerBottomLeftX(),midY);
         }
     }
 
@@ -143,14 +165,14 @@ public class Zone {
      * Get the length of the Y side of the zone
      */
     private double getLengthY(Node node) {
-        return node.getCornerTopLeftY() - node.getCornerBottomLeftY();
+        return   node.getCornerTopLeftY() - node.getCornerBottomLeftY();
     }
 
     /**
      * Get the length of the X side of the zone
      */
     private double getLengthX(Node node) {
-        return node.getCornerBottomLeftX() - node.getCornerBottomRightX();
+        return  node.getCornerBottomRightX() - node.getCornerBottomLeftX();
     }
 
     /**
