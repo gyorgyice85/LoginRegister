@@ -1,15 +1,10 @@
 package connection;
-
+import model.*;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
-import model.Node;
-
 
 public class Client {
 
@@ -21,13 +16,14 @@ public class Client {
 	/**
 	 * Methode, um eine File/ein Image als ByteArray zu senden
 	 * 
-
+	 * @param socket 						= das Socket, auf dem Uebertragen wird
 	 * @param file							= die File/ das Image zum Senden
 	 * @uses imageSerializer				= Hilfsmethode, um eine File/ein Image als ByteArray wiederzugeben
 	 * @uses sendByteArray 					= Hilfsmethode, zum Senden eines ByteArrays
 	 * @throws UnknownHostException			= unbekannter Host
 	 * @throws IOException					= Fehler beim Input/Output
 	 */
+	
 	protected void sendImageAsByteArray(Socket socket, File file){
 		
 		this.socket = socket;
@@ -83,7 +79,8 @@ public class Client {
 	
 	/**
 	 * Methode, um ein Knoten/Node Objekt als ByteArray zu senden
-	 *
+	 * 
+	 * @param ip						= IP Adresse des Empfaengers
 	 * @param node						= der zu uebertragende Knoten/Node
 	 * @throws UnknownHostException		= Unknown Host
 	 * @throws IOException				= Fehler beim Input/Output
@@ -96,77 +93,49 @@ public class Client {
 		byte[] buffer = serialization.fillNodeByteArray(node);
 		
 		sendByteArray(socket, buffer);	
-		
-	}
-	
-	
-	
-	
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private String convertDoubleToString(double wert){
-		String newString = Double.toString(wert);
-		return newString;
-	}
-	
-
-	@SuppressWarnings("unused")
-	private void sendAll(String ip,String method,String secondString, double x, double y, int schlahmichtot) throws IOException{
-		Socket s = new Socket(ip, portNr);
-		
-		sendMethod(s, method);
-		sendString(s, secondString);
-		sendX(s, x);
-		sendY(s,y);
-		sendInt(s, schlahmichtot);
-		s.close();
-	}
-	
-	private void sendString(Socket s, String secondString) throws IOException{
-	
-		OutputStreamWriter osw = new OutputStreamWriter(s.getOutputStream());
-		PrintWriter out = new PrintWriter(osw);
-		out.write(secondString + "@");
-		osw.flush();
-	}
-	private void sendMethod(Socket s, String method) throws UnknownHostException, IOException{
-		
-		OutputStreamWriter osw = new OutputStreamWriter(s.getOutputStream());
-		PrintWriter out = new PrintWriter(osw);
-		out.write(method + ",");
-		osw.flush();
-	
 	}
 
-		
-	private void sendX(Socket s, double wert) throws UnknownHostException, IOException{
-				
-		OutputStreamWriter osw = new OutputStreamWriter(s.getOutputStream());
-		PrintWriter out = new PrintWriter(osw);
-		String wertAlsString = convertDoubleToString(wert);
-		out.write(wertAlsString + "X");
-		osw.flush();
 	
+	
+	protected void sendRoutHelperAsByteArray(Socket socket, RoutHelper routhelper) throws UnknownHostException, IOException{
+		
+		this.socket = socket;
+		
+		byte[] buffer = serialization.fillRoutHelperByteArray(routhelper);
+		
+		sendByteArray(socket, buffer);	
 	}
 	
-	private void sendY(Socket s, double wert) throws UnknownHostException, IOException{
-		
-		OutputStreamWriter osw = new OutputStreamWriter(s.getOutputStream());
-		PrintWriter out = new PrintWriter(osw);
-		String wertAlsString = convertDoubleToString(wert);
-		out.write(wertAlsString + "Y");
-		osw.flush();
 	
+	
+	protected void sendNeighbourAsByteArray(Socket socket, Neighbour neighbour) throws UnknownHostException, IOException{
+		
+		this.socket = socket;
+		
+		byte[] buffer = serialization.fillNeighbourByteArray(neighbour);
+		
+		sendByteArray(socket, buffer);	
 	}
 	
-	private void sendInt(Socket s, int wert) throws UnknownHostException, IOException{
-		
-		OutputStreamWriter osw = new OutputStreamWriter(s.getOutputStream());
-		PrintWriter out = new PrintWriter(osw);
-		String wertAlsString = Integer.toString(wert);
-		out.write(wertAlsString + "I");
-		osw.flush();
 	
+	
+	protected void sendPeerMemoAsByteArray(Socket socket, PeerMemo peerMemo) throws UnknownHostException, IOException{
+		
+		this.socket = socket;
+		
+		byte[] buffer = serialization.fillPeerMemoByteArray(peerMemo);
+		
+		sendByteArray(socket, buffer);	
+	}
+	
+	
+	
+	protected void sendForeignDataAsByteArray(Socket socket, ForeignData foreignData) throws UnknownHostException, IOException{
+		
+		this.socket = socket;
+		
+		byte[] buffer = serialization.fillForeignDataByteArray(foreignData);
+		
+		sendByteArray(socket, buffer);	
 	}
 }
