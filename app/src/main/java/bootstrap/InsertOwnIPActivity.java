@@ -1,4 +1,5 @@
 package bootstrap;
+
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ public class InsertOwnIPActivity extends Activity {
     public InsertOwnIPActivity() throws JSONException {
     }
 
-    private static String url_set_own_ip = "https://axelczuck.000webhostapp.com/get_all_bootstrap.php";
+    private static String url_set_own_ip = "https://axelczuck.000webhostapp.com/create_bootstrap.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
