@@ -53,7 +53,7 @@ public class Node {
     private int    countPeers;
     private boolean checked;
     private Zone ownZone;
-    private DateiMemoDbSource dateiMemoDbSource;
+    private DateiMemoDbSource dateiMemoDbSource = new DateiMemoDbSource();
     private PeerMemo peerMemo;
 
 
@@ -62,7 +62,7 @@ public class Node {
 
     }
 
-
+    //Zum Testen der Splittfunktion
     public Node(Corner bottomLeft, Corner bottomRight, Corner topLeft, Corner topRight)
     {
         this.setCornerBottomLeft(bottomLeft.getX(),bottomLeft.getY());
@@ -96,12 +96,16 @@ public class Node {
         this.checked             = checked;
         this.cornerTopRightX     = cornerTopRightX;
         this.cornerTopRightY     = cornerTopRightY;
+        this.setCornerTopRight(cornerTopRightX,cornerTopRightY);
         this.cornerTopLeftX      = cornerTopLeftX;
         this.cornerTopLeftY      = cornerTopLeftY;
+        this.setCornerTopLeft(cornerTopLeftX,cornerTopLeftY);
         this.cornerBottomRightX  = cornerBottomRightX;
         this.cornerBottomRightY  = cornerBottomRightY;
+        this.setCornerBottomRight(cornerBottomRightX,cornerBottomRightY);
         this.cornerBottomLeftX   = cornerBottomLeftX;
         this.cornerBottomLeftY   = cornerBottomLeftY;
+        this.setCornerBottomLeft(cornerBottomLeftX,cornerBottomLeftY);
         this.punktX              = punktX;
         this.punktY              = punktY;
         this.iP                  = iP;
@@ -359,27 +363,29 @@ public class Node {
         }
     }
 
-    public void setCornerBottomLeft(double x, double y)
+    private void setCornerBottomLeft(double x, double y)
     {
         setCornerBottomLeftX(x);
         setCornerBottomLeftY(y);
     }
 
-    public void setCornerBottomRight(double x, double y)
+    private void setCornerBottomRight(double x, double y)
     {
         setCornerBottomRightX(x);
         setCornerBottomRightY(y);
     }
 
-    public void setCornerTopLeft(double x, double y)
+    private void setCornerTopLeft(double x, double y)
     {
         setCornerTopLeftX(x);
         setCornerTopLeftY(y);
     }
 
-    public void setCornerTopRight(double x, double y)
+    private void setCornerTopRight(double x, double y)
     {
+        System.out.println(x);
         setCornerTopRightX(x);
+
         setCornerTopRightY(y);
     }
 
@@ -392,67 +398,76 @@ public class Node {
     }
 
     public double getCornerTopRightX() {
-        return cornerTopRightX;
+        return dateiMemoDbSource.getCornerTopRightX();
     }
 
     public void setCornerTopRightX(double cornerTopRightX) {
         this.cornerTopRightX = cornerTopRightX;
+        dateiMemoDbSource.updateCornerTopRightX(cornerTopRightX);
     }
 
     public double getCornerTopRightY() {
-        return cornerTopRightY;
+        return dateiMemoDbSource.getCornerTopRightY();
     }
 
     public void setCornerTopRightY(double cornerTopRightY) {
         this.cornerTopRightY = cornerTopRightY;
+        dateiMemoDbSource.updateCornerTopRightY(cornerTopRightY);
     }
 
     public double getCornerTopLeftX() {
-        return cornerTopLeftX;
+        return dateiMemoDbSource.getCornerTopLeftX();
     }
 
     public void setCornerTopLeftX(double cornerTopLeftX) {
         this.cornerTopLeftX = cornerTopLeftX;
+        dateiMemoDbSource.updateCornerTopLeftX(cornerTopLeftX);
     }
 
     public double getCornerTopLeftY() {
-        return cornerTopLeftY;
+        return dateiMemoDbSource.getCornerTopLeftY();
     }
 
     public void setCornerTopLeftY(double cornerTopLeftY) {
         this.cornerTopLeftY = cornerTopLeftY;
+        dateiMemoDbSource.updateCornerTopLeftY(cornerTopLeftY);
     }
 
     public double getCornerBottomRightX() {
-        return cornerBottomRightX;
+        return dateiMemoDbSource.getCornerBottomRightX();
     }
 
     public void setCornerBottomRightX(double cornerBottomRightX) {
         this.cornerBottomRightX = cornerBottomRightX;
+        dateiMemoDbSource.updateCornerBottomRightX(cornerBottomRightX);
     }
 
     public double getCornerBottomRightY() {
-        return cornerBottomRightY;
+        return dateiMemoDbSource.getCornerBottomRightY();
     }
 
     public void setCornerBottomRightY(double cornerBottomRightY) {
         this.cornerBottomRightY = cornerBottomRightY;
+        dateiMemoDbSource.updateCornerBottomRightY(cornerBottomRightY);
     }
 
     public double getCornerBottomLeftX() {
-        return cornerBottomLeftX;
+        return dateiMemoDbSource.getCornerBottomLeftX();
     }
 
     public void setCornerBottomLeftX(double cornerBottomLeftX) {
         this.cornerBottomLeftX = cornerBottomLeftX;
+        dateiMemoDbSource.updateCornerBottomLeftX(cornerBottomLeftX);
+
     }
 
     public double getCornerBottomLeftY() {
-        return cornerBottomLeftY;
+        return dateiMemoDbSource.getCornerBottomLeftY();
     }
 
     public void setCornerBottomLeftY(double cornerBottomLeftY) {
         this.cornerBottomLeftY = cornerBottomLeftY;
+        dateiMemoDbSource.updateCornerBottomLeftY(cornerBottomLeftY);
     }
 
 
@@ -466,7 +481,7 @@ public class Node {
 
 
     public double getPunktX() {
-        return punktX;
+        return dateiMemoDbSource.getPunktX(dateiMemoDbSource.getUid());
     }
 
     public void setPunktX(double punktX) {
@@ -474,7 +489,7 @@ public class Node {
     }
 
     public double getPunktY() {
-        return punktY;
+        return dateiMemoDbSource.getPunktY(dateiMemoDbSource.getUid());
     }
 
     public void setPunktY(double punktY) {
@@ -482,7 +497,7 @@ public class Node {
     }
 
     public String getIP() {
-        return iP;
+        return dateiMemoDbSource.getIp(dateiMemoDbSource.getUid());
     }
 
     public void setIP(String IP) {

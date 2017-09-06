@@ -51,7 +51,7 @@ public class DateiMemoDbSource {
     };
 
     public DateiMemoDbSource(){
-        dateiMemo = new Node();
+        //dateiMemo = new Node();
     }
 
     /*
@@ -369,8 +369,8 @@ public class DateiMemoDbSource {
   * */
     public void updateCornerBottomLeftX(double newCornerBottomLeftX) {
         //1. Öffne Database
+        System.out.print("1 " + newCornerBottomLeftX);
         database = DatabaseManager.getInstance().openDatabase();
-
         //2. Erstell neue Wert
         ContentValues values = new ContentValues();
         values.put(DateiMemoDbHelper.COLUMN_CORNERBOTTOMLEFTX, newCornerBottomLeftX);

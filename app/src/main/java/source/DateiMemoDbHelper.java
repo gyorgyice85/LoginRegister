@@ -166,13 +166,12 @@ public class DateiMemoDbHelper extends SQLiteOpenHelper{
         //1. Info
         Log.d(LOG_TAG, "Die Tabelle wird mit SQL-Befehl: " + SQL_CREATE_TABLE_DATEI + SQL_CREATE_TABLE_PEERS
                 + SQL_CREATE_TABLE_NEIGBHORS + SQL_CREATE_TABLE_OWNDATAS + SQL_CREATE_TABLE_FOREIGNDATAS + " angelegt.");
-
         //2. Enable foreign key
         if (!db.isReadOnly()) {
             // Enable foreign key constraints
             db.execSQL("PRAGMA foreign_keys=ON;");
-        }
 
+        }
         //3. Erstellung eine Datenbank mit String "SQL_CREATE" als Parameter
         db.execSQL(SQL_CREATE_TABLE_DATEI);
         db.execSQL(SQL_CREATE_TABLE_PEERS);

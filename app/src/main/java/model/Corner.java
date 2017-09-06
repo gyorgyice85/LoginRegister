@@ -19,8 +19,8 @@ public class Corner {
             throw new YMustBeLargerThanZeroException("Y has to be larger than Zero");
 
         }else{
-            this.x = x;
-            this.y = y;
+            setX(x);
+            setY(y);
         }
 
     }

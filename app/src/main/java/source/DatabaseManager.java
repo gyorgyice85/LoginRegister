@@ -16,7 +16,8 @@ public class DatabaseManager {
     private static SQLiteOpenHelper mDatabaseHelper;
     private SQLiteDatabase mDatabase;
 
-    public static synchronized void initializeInstance(SQLiteOpenHelper helper) {
+
+    public static synchronized void initializeInstance(DateiMemoDbHelper helper) {
         if (instance == null) {
             instance = new DatabaseManager();
             mDatabaseHelper = helper;

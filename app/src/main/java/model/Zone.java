@@ -131,33 +131,33 @@ public class Zone {
 
             double midX = getLengthX(node1) / 2.0;
             // set peers und neigbour und update Corner
-            node1.setCornerBottomRight(midX,node1.getCornerBottomRightY());
-            node1.setCornerTopRight(midX,node1.getCornerTopRightY());
+            node1.setCornerBottomRightX(midX);
+            node1.setCornerTopRightX(midX);
 
-            node2.setCornerTopRight(midX,node2.getCornerTopRightY());
-            node2.setCornerBottomRight(midX,node2.getCornerBottomRightY());
+            node2.setCornerTopRightX(midX);
+            node2.setCornerBottomRightX(midX);
 
-            node3.setCornerBottomLeft(midX, node3.getCornerBottomLeftY());
-            node3.setCornerTopLeft(midX,node3.getCornerTopLeftY());
+            node3.setCornerBottomLeftX(midX);
+            node3.setCornerTopLeftX(midX);
 
-            node4.setCornerTopLeft(midX,node4.getCornerTopLeftY());
-            node4.setCornerBottomLeft(midX,node4.getCornerBottomLeftY());
+            node4.setCornerTopLeftX(midX);
+            node4.setCornerBottomLeftX(midX);
 
         } else {
 
             double midY =  getLengthY(node1) / 2.0;
             // set peers und neigbour und update Corner
-            node1.setCornerTopRight(node1.getCornerTopRightX(),midY);
-            node1.setCornerTopLeft(node1.getCornerTopRightX(),midY);
+            node1.setCornerTopRightY(midY);
+            node1.setCornerTopLeftY(midY);
 
-            node2.setCornerBottomLeft(node2.getCornerBottomLeftX(),midY);
-            node2.setCornerBottomRight(node2.getCornerBottomRightX(),midY);
+            node2.setCornerBottomLeftY(midY);
+            node2.setCornerBottomRightY(midY);
 
-            node3.setCornerTopRight(node3.getCornerTopRightX(),midY);
-            node3.setCornerTopLeft(node3.getCornerTopLeftX(),midY);
+            node3.setCornerTopRightY(midY);
+            node3.setCornerTopLeftY(midY);
 
-            node4.setCornerBottomRight(node4.getCornerBottomRightX(),midY);
-            node4.setCornerBottomLeft(node4.getCornerBottomLeftX(),midY);
+            node4.setCornerBottomRightY(midY);
+            node4.setCornerBottomLeftY(midY);
         }
     }
 
