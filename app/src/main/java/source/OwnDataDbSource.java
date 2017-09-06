@@ -4,15 +4,22 @@ package source;
  * Created by en on 13.08.17.
  */
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import model.*;
+import source.DatabaseManager;
+import source.DateiMemoDbHelper;
+import model.Node;
+import model.ForeignData;
+import model.Neighbour;
+import model.OwnDataMemo;
 
-
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -136,7 +143,7 @@ public class OwnDataDbSource {
         ContentValues values = new ContentValues();
         values.put(DateiMemoDbHelper.COLUMN_OID, ownDataMemo.getUid());
         //values.put(DateiMemoDbHelper.COLUMN_CHECKED, ownDataMemo.isChecked());
-        values.put(DateiMemoDbHelper.COLUMN_FOTOID, ownDataMemo.getFileId());
+        values.put(DateiMemoDbHelper.COLUMN_FILEID, ownDataMemo.getFileId());
 
         //
         //insert row
@@ -213,6 +220,7 @@ public class OwnDataDbSource {
    *
    * */
     public int getFileId(long uid) {
+        database = DatabaseManager.getInstance().openDatabase();
         //List<long> UidList = new ArrayList<>();
         String selectQuery = "SELECT "+ DateiMemoDbHelper.COLUMN_FILEID + " FROM " + DateiMemoDbHelper.TABLE_OWNDATA_LIST+ " WHERE "
                 + DateiMemoDbHelper.COLUMN_UID + " = " + uid;
@@ -224,7 +232,7 @@ public class OwnDataDbSource {
         fileId = cursor.getInt(cursor.getColumnIndex(DateiMemoDbHelper.COLUMN_FILEID));
 
         cursor.close();
-
+        DatabaseManager.getInstance().closeDatabase();
         return fileId;
     }
     //
@@ -237,6 +245,8 @@ public class OwnDataDbSource {
     *
     * */
     public double getUidOwn() {
+        database = DatabaseManager.getInstance().openDatabase();
+        DatabaseManager.getInstance().closeDatabase();
         return dateiMemoDbSource.getUid();
     }
 
@@ -277,3 +287,4 @@ public class OwnDataDbSource {
         return OwnDataList;
     }
 }
+

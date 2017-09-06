@@ -1,9 +1,12 @@
 package app;
 
+
+
 import android.app.Application;
 import android.content.Context;
 
-import source.*;
+import source.DateiMemoDbHelper;
+import source.DatabaseManager;
 
 
 /**
