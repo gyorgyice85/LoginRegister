@@ -369,7 +369,6 @@ public class DateiMemoDbSource {
   * */
     public void updateCornerBottomLeftX(double newCornerBottomLeftX) {
         //1. Öffne Database
-        System.out.print("1 " + newCornerBottomLeftX);
         database = DatabaseManager.getInstance().openDatabase();
         //2. Erstell neue Wert
         ContentValues values = new ContentValues();

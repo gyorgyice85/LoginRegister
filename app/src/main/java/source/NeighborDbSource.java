@@ -12,10 +12,7 @@ import android.util.Log;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import source.DatabaseManager;
-import source.DateiMemoDbHelper;
-import model.Node;
-import model.Neighbour;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -171,6 +168,7 @@ public class NeighborDbSource {
         values.put(DateiMemoDbHelper.COLUMN_PUNKTY, neighborMemo.getPunktY());
         values.put(DateiMemoDbHelper.COLUMN_UIP, neighborMemo.getUIP());
         values.put(DateiMemoDbHelper.COLUMN_RTT, neighborMemo.getRTT());
+        //automatisch
         //values.put(DateiMemoDbHelper.COLUMN_NEIGHBOUR_ID, neighborMemo.getNeighbour_id());
 
 
@@ -435,24 +433,24 @@ public class NeighborDbSource {
     *
     *
     * */
-    public void udpateRTT(double newRTT) {
-        //1. Öffne Database
-        database = DatabaseManager.getInstance().openDatabase();
+        public void udpateRTT(double newRTT) {
+            //1. Öffne Database
+            database = DatabaseManager.getInstance().openDatabase();
 
-        //2. Erstell neue Wert
-        ContentValues values = new ContentValues();
-        values.put(DateiMemoDbHelper.COLUMN_RTT, newRTT);
+            //2. Erstell neue Wert
+            ContentValues values = new ContentValues();
+            values.put(DateiMemoDbHelper.COLUMN_RTT, newRTT);
 
-        //3. Update Database
-        database.update(DateiMemoDbHelper.TABLE_NEIGHBOR_LIST, //UPDATE which TABLE
-                values, // SET query
-                null, // should be WHERE query
-                null  // should be Array
-        );
+            //3. Update Database
+            database.update(DateiMemoDbHelper.TABLE_NEIGHBOR_LIST, //UPDATE which TABLE
+                    values, // SET query
+                    null, // should be WHERE query
+                    null  // should be Array
+            );
 
-        //4. Schliess Database
-        DatabaseManager.getInstance().closeDatabase();
-    }
+            //4. Schliess Database
+            DatabaseManager.getInstance().closeDatabase();
+        }
     /*
     *  ================================================================================================================================
     */
@@ -943,6 +941,7 @@ public class NeighborDbSource {
                 neighborMemo.setPunktY(cursor.getDouble(cursor.getColumnIndex(dbHelper.COLUMN_PUNKTY)));
                 neighborMemo.setUIP(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_UIP)));
                 neighborMemo.setRTT(cursor.getDouble(cursor.getColumnIndex(dbHelper.COLUMN_RTT)));
+                //neighborMemo.setNeighbour_id(cursor.getLong(cursor.getColumnIndex(dbHelper.COLUMN_NEIGHBOUR_ID)));
 
 
                 // Add book to books

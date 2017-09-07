@@ -12,12 +12,7 @@ import android.util.Log;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import source.DatabaseManager;
-import source.DateiMemoDbHelper;
-import model.Node;
-import model.ForeignData;
-import model.Neighbour;
-import model.OwnDataMemo;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -287,4 +282,3 @@ public class OwnDataDbSource {
         return OwnDataList;
     }
 }
-

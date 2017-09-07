@@ -1,4 +1,5 @@
 package source;
+
 /**
  * Created by en on 13.08.17.
  */
@@ -11,10 +12,7 @@ import android.util.Log;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import source.DatabaseManager;
-import source.DateiMemoDbHelper;
-import model.Node;
-import model.ForeignData;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -33,7 +31,7 @@ public class ForeignDataDbSource {
     //Array
     private String[] columns_ForeignData = {
             DateiMemoDbHelper.COLUMN_FOTOID,
-            DateiMemoDbHelper.COLUMN_UID,
+            DateiMemoDbHelper.COLUMN_FID,
             DateiMemoDbHelper.COLUMN_PUNKTX,
             DateiMemoDbHelper.COLUMN_PUNKTY,
             //DateiMemoDbHelper.COLUMN_CHECKED,
@@ -152,18 +150,20 @@ public class ForeignDataDbSource {
         //insert muss long
         //
         int foreign_Id = (int)database.insert(DateiMemoDbHelper.TABLE_FOREIGNDATA_LIST, null, values);
-        DatabaseManager.getInstance().closeDatabase();
+
         //
         //dataId
         //insert data in Array
         //
 //        Cursor cursor = database.query(DateiMemoDbHelper.TABLE_FOREIGNDATA_LIST,
-//                columns_ForeignData, DateiMemoDbHelper.COLUMN_UID + "=" + foreign_Id ,
+//                columns_ForeignData, DateiMemoDbHelper.COLUMN_FOTOID + "=" + foreign_Id ,
 //                null, null, null, null);
 //
 //        cursor.moveToFirst();
 //        foreignData = cursorToForeignData(cursor);
 //        cursor.close();
+
+        DatabaseManager.getInstance().closeDatabase();
 
         return foreign_Id;
     }
@@ -194,8 +194,8 @@ public class ForeignDataDbSource {
     *
     * */
 //    private ForeignData cursorToForeignData(Cursor cursor) {
-//        int idIndex = cursor.getColumnIndex(DateiMemoDbHelper.COLUMN_UID);
-//        int idChecked = cursor.getColumnIndex(DateiMemoDbHelper.COLUMN_CHECKED);
+//        int idIndex = cursor.getColumnIndex(DateiMemoDbHelper.COLUMN_FID);
+//        //int idChecked = cursor.getColumnIndex(DateiMemoDbHelper.COLUMN_CHECKED);
 //        int idFotoId = cursor.getColumnIndex(DateiMemoDbHelper.COLUMN_FOTOID);
 //        int idPunktX = cursor.getColumnIndex(DateiMemoDbHelper.COLUMN_PUNKTX);
 //        int idPunktY = cursor.getColumnIndex(DateiMemoDbHelper.COLUMN_PUNKTY);
@@ -205,8 +205,8 @@ public class ForeignDataDbSource {
 //
 //        long uid = cursor.getLong(idIndex);
 //
-//        int intValueChecked = cursor.getInt(idChecked);
-//        boolean isChecked = (intValueChecked != 0);
+//        //int intValueChecked = cursor.getInt(idChecked);
+//       // boolean isChecked = (intValueChecked != 0);
 //
 //        int fotoId = cursor.getInt(idFotoId);
 //        double punktX = cursor.getDouble(idPunktX);
@@ -215,20 +215,20 @@ public class ForeignDataDbSource {
 //
 //
 //
-//        ForeignData foreignData = new ForeignData(uid, isChecked, fotoId, punktX, punktY, foreignIp);
+//        ForeignData foreignData = new ForeignData();
 //
 //        return foreignData;
 //    }
 
-    /*
-   *           Get
-   *
-   *
-   *           All Data
-   *
-   *
-   *
-   * */
+     /*
+    *           Get
+    *
+    *
+    *           All Data
+    *
+    *
+    *
+    * */
      /*
     *           Get
     *
@@ -237,22 +237,22 @@ public class ForeignDataDbSource {
     *
     *
     * */
-    public double getPunktXForeign(long uid) {
-        database = DatabaseManager.getInstance().openDatabase();
-        String selectQuery = "SELECT "+ DateiMemoDbHelper.COLUMN_PUNKTX +" FROM " + DateiMemoDbHelper.TABLE_FOREIGNDATA_LIST + " WHERE "
-                + DateiMemoDbHelper.COLUMN_FID + " = " + uid;
+     public double getPunktXForeign(long uid) {
+         database = DatabaseManager.getInstance().openDatabase();
+         String selectQuery = "SELECT "+ DateiMemoDbHelper.COLUMN_PUNKTX +" FROM " + DateiMemoDbHelper.TABLE_FOREIGNDATA_LIST + " WHERE "
+                 + DateiMemoDbHelper.COLUMN_FID + " = " + uid;
 
-        Log.e(LOG_TAG, selectQuery);
+         Log.e(LOG_TAG, selectQuery);
 
-        Cursor c = database.rawQuery(selectQuery, null);
+         Cursor c = database.rawQuery(selectQuery, null);
 
-        if (c != null)
-            c.moveToFirst();
-        double punktX;
-        punktX = c.getDouble(c.getColumnIndex(DateiMemoDbHelper.COLUMN_PUNKTX));
-        DatabaseManager.getInstance().closeDatabase();
-        return punktX;
-    }
+         if (c != null)
+             c.moveToFirst();
+         double punktX;
+         punktX = c.getDouble(c.getColumnIndex(DateiMemoDbHelper.COLUMN_PUNKTX));
+         DatabaseManager.getInstance().closeDatabase();
+         return punktX;
+     }
     //
     // ================================================================================================================================
     //
