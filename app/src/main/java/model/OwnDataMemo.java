@@ -5,10 +5,8 @@ package model;
  */
 
 public class OwnDataMemo {
-    //DateiMemo dateiMemo;
 
     public long uid;
-    //public boolean checked;
     public int fileId;
 
 
@@ -26,14 +24,6 @@ public class OwnDataMemo {
     public void setUid(long uid) {
         this.uid = uid;
     }
-
-//    public boolean isChecked() {
-//        return checked;
-//    }
-//
-//    public void setChecked(boolean checked) {
-//        this.checked = checked;
-//    }
 
     public int getFileId() {
         return fileId;

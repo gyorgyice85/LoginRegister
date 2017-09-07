@@ -7,7 +7,6 @@ public class PeerMemo {
     private long uid;
     private long peerId;
     private String peerIp;
-    //private boolean checked;
 
 
 
@@ -33,13 +32,7 @@ public class PeerMemo {
         this.peerId = peerId;
     }
 
-//    public boolean isChecked() {
-//        return checked;
-//    }
-//
-//    public void setChecked (boolean checked) {
-//        this.checked = checked;
-//    }
+
 
 
     public String getPeerIp() {

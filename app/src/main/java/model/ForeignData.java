@@ -6,10 +6,8 @@ package model;
  */
 
 public class ForeignData {
-    //DateiMemo dateiMemo;
 
     private long uid;
-    //private boolean checked;
     private int fotoId;
     private double punktX;
     private double punktY;
@@ -31,14 +29,6 @@ public class ForeignData {
     public void setUid(long uid) {
         this.uid = uid;
     }
-
-//    public boolean isChecked() {
-//        return checked;
-//    }
-//
-//    public void setChecked(boolean checked) {
-//        this.checked = checked;
-//    }
 
     public int getFotoId() {
         return fotoId;

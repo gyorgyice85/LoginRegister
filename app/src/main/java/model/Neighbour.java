@@ -44,38 +44,6 @@ public class Neighbour {
 //        this.RTT = RTT;
 //    }
 
-//    public double getCornerTopRight() {
-//        return cornerTopRight;
-//    }
-//
-//    public void setCornerTopRight(double cornerTopRight) {
-//        this.cornerTopRight = cornerTopRight;
-//    }
-//
-//    public double getCornerTopLeft() {
-//        return cornerTopLeft;
-//    }
-//
-//    public void setCornerTopLeft(double cornerTopLeft) {
-//        this.cornerTopLeft = cornerTopLeft;
-//    }
-//
-//    public double getCornerBottomRight() {
-//        return cornerBottomRight;
-//    }
-//
-//    public void setCornerBottomRight(double cornerBottomRight) {
-//        this.cornerBottomRight = cornerBottomRight;
-//    }
-//
-//    public double getCornerBottomLeft() {
-//        return cornerBottomLeft;
-//    }
-//
-//    public void setCornerBottomLeft(double cornerBottomLeft) {
-//        this.cornerBottomLeft = cornerBottomLeft;
-//    }
-
     public double getCornerTopRightX() {
         return cornerTopRightX;
     }
