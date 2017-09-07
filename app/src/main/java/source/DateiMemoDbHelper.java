@@ -1,7 +1,6 @@
 package source;
 
 
-
 /**
  * Created by en on 15.06.17.
  */
@@ -14,7 +13,7 @@ import app.App;
 
 import java.security.PublicKey;
 
-public class DateiMemoDbHelper extends SQLiteOpenHelper {
+public class DateiMemoDbHelper extends SQLiteOpenHelper{
 
     private static final String LOG_TAG = DateiMemoDbHelper.class.getSimpleName();
 
@@ -103,7 +102,8 @@ public class DateiMemoDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_PEER_LIST +
                     " ( " + COLUMN_PEERID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     COLUMN_PEERIP + " TEXT NOT NULL," +
-                    COLUMN_PID + " INTEGER NOT NULL );";
+                    COLUMN_PID + " INTEGER NOT NULL," +
+                    " FOREIGN KEY ("+ COLUMN_PID +") REFERENCES "+ TABLE_DATEI_LIST +"("+ COLUMN_UID + "));";
 
     public static final String SQL_CREATE_TABLE_NEIGBHORS =
             "CREATE TABLE " + TABLE_NEIGHBOR_LIST +
@@ -120,12 +120,14 @@ public class DateiMemoDbHelper extends SQLiteOpenHelper {
                     COLUMN_PUNKTX + " REAL NOT NULL," +
                     COLUMN_PUNKTY + " REAL NOT NULL," +
                     COLUMN_RTT + " REAL NOT NULL," +
-                    COLUMN_NID + " INTEGER NOT NULL );";
+                    COLUMN_NID + " INTEGER NOT NULL," +
+                    " FOREIGN KEY ("+ COLUMN_NID +") REFERENCES "+ TABLE_DATEI_LIST +"("+ COLUMN_UID + "));";
 
     public static final String SQL_CREATE_TABLE_OWNDATAS =
             "CREATE TABLE " + TABLE_OWNDATA_LIST +
                     " ( " + COLUMN_FILEID + " INTEGER PRIMARY KEY," +
-                    COLUMN_OID + " INTEGER NOT NULL );";
+                    COLUMN_OID + " INTEGER NOT NULL," +
+                    " FOREIGN KEY ("+ COLUMN_OID +") REFERENCES "+ TABLE_DATEI_LIST +"("+ COLUMN_UID + "));";
 
     public static final String SQL_CREATE_TABLE_FOREIGNDATAS =
             "CREATE TABLE " + TABLE_FOREIGNDATA_LIST +
@@ -133,7 +135,8 @@ public class DateiMemoDbHelper extends SQLiteOpenHelper {
                     COLUMN_PUNKTX + " REAL NOT NULL," +
                     COLUMN_PUNKTY + " REAL NOT NULL," +
                     COLUMN_IP + " TEXT NOT NULL," +
-                    COLUMN_FID + " INTEGER NOT NULL );";
+                    COLUMN_FID + " INTEGER NOT NULL," +
+                    " FOREIGN KEY ("+ COLUMN_FID +") REFERENCES "+ TABLE_DATEI_LIST +"("+ COLUMN_UID + "));";
 
     public static final String SQL_DROP_DATEI = "DROP TABLE IF EXISTS " + TABLE_DATEI_LIST;
     public static final String SQL_DROP_PEERS = "DROP TABLE IF EXISTS " + TABLE_PEER_LIST;
