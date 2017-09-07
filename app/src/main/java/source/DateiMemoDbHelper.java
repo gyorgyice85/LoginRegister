@@ -16,6 +16,11 @@ public class DateiMemoDbHelper extends SQLiteOpenHelper{
 
     private static final String LOG_TAG = DateiMemoDbHelper.class.getSimpleName();
 
+    //Standardkonstruktor
+    public DateiMemoDbHelper()
+    {
+        super(App.getContext(),DB_NAME,null,DB_VERSION);
+    }
 
     //Konstruktor
     //SUPER verwendet man, weil unsere "helper" ist eine Ableitung von SQLiteOpenHelper
