@@ -17,33 +17,33 @@ import java.net.Socket;
 public class Server {
 	ServerSocket serverSocket = null;
 	Serialization serialization = new Serialization();
-	
-	
-	
+
+
+
 	/**
 	 * Methode zum Empfangen eines ByteArrays des Senders
-	 * 
+	 *
 	 * @param serverSocket 		= ServerSocket, auf dem Empfangen wird
-	 * @return			= ByteArray, das gesendet wurde
+	 * @return					= ByteArray, das gesendet wurde
 	 * @throws IOException		= Fehler bei Input/Output
 	 */
-	
-	
-	protected byte[] receiveByteArray(ServerSocket serverSocket, Socket socket) throws IOException{
-		
+
+
+	public byte[] receiveByteArray(ServerSocket serverSocket, Socket socket) throws IOException{
+
 		byte[] buffer = null;
-		
+
 		try{
-			
+
 			DataInputStream dIn = new DataInputStream(socket.getInputStream());
 
-			int length = dIn.readInt();  
-			
-				if(length>0) {
-				    buffer = new byte[length];
-				    dIn.readFully(buffer, 0, buffer.length);
-				}
-				
+			int length = dIn.readInt();
+
+			if(length>0) {
+				buffer = new byte[length];
+				dIn.readFully(buffer, 0, buffer.length);
+			}
+
 			try{
 				if(serverSocket!= null){
 					serverSocket.close();
@@ -56,70 +56,70 @@ public class Server {
 		}
 		return buffer;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Methode, um ein ByteArray in ein Bild zu konvertieren
-	 * 
+	 *
 	 * @param buffer 			= das ByteArray, das konvertiert werden soll
-	 * @return 				= die File/das Image
+	 * @return 					= die File/das Image
 	 */
-	
+
 	protected void saveFileFromByteArray(byte[] buffer, File file){
-		
+
 		try{
 			serialization.imageDeSerializer(buffer, file);
-			
+
 		} catch(IOException e){
 			e.printStackTrace();
 		}
-		
+
 
 	}
-	
-	protected RoutHelper getRoutHelper(byte[] buffer){
-		
+
+	public RoutHelper getRoutHelper(byte[] buffer){
+
 		RoutHelper routHelper = null;
-		
+
 		byte[] bufferBody = serialization.getByteData(buffer);
-		
+
 		routHelper = serialization.deserializdeRoutHelper(bufferBody);
-		
+
 		return routHelper;
 	}
-	
-	protected Neighbour getNeighbour(byte[] buffer){
-		
+
+	public Neighbour getNeighbour(byte[] buffer){
+
 		Neighbour neighbour = null;
-		
+
 		byte[] bufferBody = serialization.getByteData(buffer);
-		
+
 		neighbour = serialization.deserializdeNeighbour(bufferBody);
-		
+
 		return neighbour;
 	}
-	
-	protected PeerMemo getPeerMemo(byte[] buffer){
-		
+
+	public PeerMemo getPeerMemo(byte[] buffer){
+
 		PeerMemo peerMemo = null;
-		
+
 		byte[] bufferBody = serialization.getByteData(buffer);
-		
+
 		peerMemo = serialization.deserializdePeerMemo(bufferBody);
-		
+
 		return peerMemo;
 	}
-	
-	protected ForeignData getForeignData(byte[] buffer){
-		
+
+	public ForeignData getForeignData(byte[] buffer){
+
 		ForeignData foreignData = null;
-		
+
 		byte[] bufferBody = serialization.getByteData(buffer);
-		
+
 		foreignData = serialization.deserializdeForeignData(bufferBody);
-		
+
 		return foreignData;
 	}
-	
+
 }

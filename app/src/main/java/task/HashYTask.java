@@ -12,14 +12,16 @@ import org.json.JSONException;
 public class HashYTask extends AsyncTask<String, String , String> {
 
     private static final long DIVIDER= 2552552552l;
+
     private double hashY;
-    interface AsyncResponse {
+
+    public interface AsyncResponse {
         void processFinish(double result);
     }
 
-    private HashYTask.AsyncResponse delegate = null;
+    private AsyncResponse delegate = null;
 
-    HashYTask(HashYTask.AsyncResponse delegate)throws JSONException {
+    public HashYTask(AsyncResponse delegate)throws JSONException {
         this.delegate = delegate;
     }
 
@@ -60,6 +62,5 @@ public class HashYTask extends AsyncTask<String, String , String> {
     protected void onPostExecute(String s){
         double d = hashY;
         delegate.processFinish(d);
-        Log.d("HashYValue","d: "+d);
     }
 }

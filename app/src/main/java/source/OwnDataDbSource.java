@@ -207,6 +207,56 @@ public class OwnDataDbSource {
 //        return ownDataMemo;
 //    }
 
+    /**
+     * @author Joshua Zabel
+     * @param index
+     * @return
+     */
+    public int getFotoId(int index){
+        database = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = "SELECT "+ DateiMemoDbHelper.COLUMN_FILEID+" FROM " + DateiMemoDbHelper.TABLE_OWNDATA_LIST + " WHERE "
+                + DateiMemoDbHelper.COLUMN_OID + " = " + index;
+
+        Cursor cursor = database.rawQuery(selectQuery,null);
+
+        if(cursor != null){
+            int fotoId = cursor.getInt(cursor.getColumnIndex(DateiMemoDbHelper.COLUMN_FILEID));
+            if(fotoId >= 0){
+                cursor.close();
+                DatabaseManager.getInstance().closeDatabase();
+                return fotoId;
+            }
+        }
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+        return -1;
+    }
+
+    /**
+     * @author Joshua Zabel
+     * @param index
+     * @return
+     */
+    public long getUID(int index){
+        database = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = "SELECT "+ DateiMemoDbHelper.COLUMN_UID+" FROM " + DateiMemoDbHelper.TABLE_OWNDATA_LIST + " WHERE "
+                + DateiMemoDbHelper.COLUMN_OID + " = " + index;
+
+        Cursor cursor = database.rawQuery(selectQuery,null);
+
+        if(cursor != null){
+            long uID = cursor.getLong(cursor.getColumnIndex(DateiMemoDbHelper.COLUMN_UID));
+            if(uID >= 0){
+                cursor.close();
+                DatabaseManager.getInstance().closeDatabase();
+                return uID;
+            }
+
+        }
+        cursor.close();
+        DatabaseManager.getInstance().closeDatabase();
+        return -1;
+    }
     /*
    *
    *

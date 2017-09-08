@@ -4,14 +4,21 @@ import android.util.Log;
 
 import org.json.JSONException;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 import bootstrap.AllIPsActivity;
 import connection.Client;
+import connection.RoutHelper;
 import source.DatabaseManager;
 import source.DateiMemoDbSource;
 import source.NeighborDbSource;
+import source.OwnDataDbSource;
+import source.PeerDbSource;
 /**
  *
  */
@@ -36,7 +43,10 @@ public class Node {
 
     private static final int maxPeers= 3;
     private NeighborDbSource nDB;
+    private PeerDbSource peerDB;
+    private OwnDataDbSource ownDataDB;
     private static final long DIVIDER=2552552552l;
+    private static final int PORTNR = 8080;
 
     private long   uid;
     private double cornerTopRightX;
@@ -54,6 +64,8 @@ public class Node {
     private Zone ownZone;
     private DateiMemoDbSource dateiMemoDbSource = new DateiMemoDbSource();
     private PeerMemo peerMemo;
+    private Socket socket;
+    private Client client = new Client();
 
 
     public Node ()
@@ -183,17 +195,16 @@ public class Node {
     }
 
     /**
-     *
-     * @param ip
+     * @param ip Ist die eigene IP
      * @param x X-Wert des zu routenden Bildes
      * @param y Y-Wert des zu routenden Bildes
      * @param FotoId Foto-ID
      */
-    private void receivePicRoutingRequest(String ip, double x, double y, int FotoId){
+    private void picRouting(String ip, double x, double y, int FotoId, int uid) throws IOException {
         //// TODO: 15.08.2017 Verbindungsaufbau zu der ip um Bild herunterzuladen und dann zu speichern
         /// TODO: 15.08.2017 verbindungsaufbau zu Peers und diesen werden die Informationen zum Bild übermittelt und nun laden sie sich das Bild von zuletzt gerouteten Node herunter
         //fortsetzung des routing
-        routing(ip,x,y,FotoId);
+
     }
 
     /**
@@ -203,17 +214,8 @@ public class Node {
      * @param y Y-Wert des zu routenden Knoten
      * @param id kann jeweils FotoID oder UID sein, wird benötigt sodass man seinen Peers die nötigen Informationen zu dem neuen Knoten geben kann
      */
-    private void receiveRoutingRequest(String ip, double x, double y, int id) {
-        if(getMyZone().checkIfInMyZone(x,y)){
-            // wie bekomme ich das jeweilige socketobject zum versenden
-            //// TODO: 14.08.2017  Reply to Request-Method(muss setPeers(mit sich selbst) und setNeighbours mitsenden)
-            //// TODO: 14.08.2017 Muss aktuelle Peers über den neuen Knoten Informieren, sodass diese ihre Peerliste updaten. Nun update deine eigene Peerlist
-            if(checkIfMaxPeersCount()){
-                //// TODO: 15.08.2017 informiere deine Peers das sie nun Splitten müssen// methode die einen Splitt aufruft
-                //// TODO: 14.08.2017 SPLITT
-            }
+    public void receiveRoutingRequest(String ip, double x, double y, int id) throws IOException {
 
-        }
         //fortsetzung des routing
         routing(ip,x,y,id);
     }
@@ -225,9 +227,26 @@ public class Node {
      * @param y Des zu routenden Knoten/Bild
      * @param id Des zu routenden Knoten/Bild
      */
-    private void routing(String ip, double x ,double y, int id){
+    private void routing(String ip, double x ,double y, int id) throws IOException {
         double neighbourX, neighbourY;
         double [] distances = new double[4];
+
+
+        if(getMyZone().checkIfInMyZone(x,y)){
+            //neuen Knoten seine aktuelle PeersList geben (mit sichselbst)
+            //neuen Knoten eintragen in eigene peer list
+
+            //// TODO: 14.08.2017  Reply to Request-Method(muss setPeers(mit sich selbst) und setNeighbours mitsenden)
+            //// TODO: 14.08.2017 Muss aktuelle Peers über den neuen Knoten Informieren, sodass diese ihre Peerliste updaten. Nun update deine eigene Peerlist
+            //// TODO: 08.09.2017 abbrechen
+            if(checkIfMaxPeersCount()){
+
+                //// TODO: 15.08.2017 informiere deine Peers das sie nun Splitten müssen// methode die einen Splitt aufruft
+                //// TODO: 14.08.2017 SPLITT
+                // TODO: 08.09.2017 abbrechen
+            }
+
+        }
 
         //bei 1 anfangen?
         for(int i=0; i<=distances.length ; i++){
@@ -240,7 +259,15 @@ public class Node {
 
         }
         int index = compareValues(distances);
-        
+        String connectIP = nDB.getUip(index);
+
+        //getNeighbour(index).getIP(); in dem socket eintragen
+        socket = new Socket(connectIP,PORTNR);
+
+
+        RoutHelper rh = new RoutHelper(ip,x,y,id);
+        //routing request
+        client.sendRoutHelperAsByteArray(socket,rh);
         //// TODO: 07.09.2017 sende ein receiveRoutingRequest  an ip
         //// TODO: 14.08.2017 Verbindungsaufbau zu dem Neighbour der an Stelle == Index steht und IP und x,y-Werte übertragen so das dieser weiter routen kann, bzw recreive routing request bei ihm aufrufen
     }
@@ -265,8 +292,8 @@ public class Node {
      * @param y
      * @param fotoId
      */
-    public void placePicInCan(String ip, double x, double y, int fotoId){
-        receivePicRoutingRequest(ip, x, y, fotoId);
+    public void placePicInCan(String ip, double x, double y, int fotoId) throws IOException {
+        //receivePicRoutingRequest(ip, x, y, fotoId);
     }
 
     /**
@@ -288,7 +315,7 @@ public class Node {
      */
     private void informPeersAboutYourself(String ip) {
         //// TODO: 0114.08.27    user.getUid(); von DB, user.getIP von DB
-        //long uid = dateiMemoDbSource.getUid();
+        long uid = dateiMemoDbSource.getUid();
 
 
         //// TODO: 14.08.2017 sende an alle deine Peers ein setPeer mit diesen Informationen
@@ -316,25 +343,67 @@ public class Node {
         return index;
     }
 
-    public void downloadOwnData(){
+
+    /**
+     * Dient dazu seine eigenen Bilder nach ausfallen des eigenen Gerätes wieder zu downloaden
+     * @param ip Eigene IP
+     * @param x des Bildes
+     * @param y des Bildes
+     * @param fotoID
+     * @param uid
+     * @throws IOException
+     */
+    public void checkForOwnData(String ip, double x, double y, int fotoID, int uid) throws IOException {
+        for(int i =0; i<=4; i++){
+            //muss ich hier this.ownDataDB machen?
+            int tempFID  = ownDataDB.getFotoId(i);
+            long tempUID = ownDataDB.getUID(i);
+            if(tempFID == fotoID && tempUID == uid){
+                socket = new Socket(ip,PORTNR);
+                // TODO: 08.09.2017   get file mit dieser fotoID und UID
+                File file = null;
+                client.sendImageAsByteArray(socket,file);
+
+            }
+        }
+
+
+        picRouting(ip,x,y,fotoID,uid);
         // TODO: 28.08.2017  checken ob OwnData( auch wirklich die Bilder)
     }
-
-    public void requestJoin_for_GUI() throws JSONException {
-        requestJoin();
-    }
-
-
 
     /**
      * Methode die aufgerufen wird wenn das routing beendet ist und die DB's des neuen Knoten updaten muss
      * @param ip Des neuen Knotens
      */
-    private void replyToRequest(String ip){
+    private void replyToRequest(String ip) throws IOException {
+        socket = new Socket(ip,PORTNR);
+        List<PeerMemo> peerList = peerDB.getAllPeer();
+
+        //muss setPeers aufrufen
+        //Liste senden?
         //// TODO: 15.08.2017 Verbindung zu IP herstellen, und setPeer und setNeighbour aufrufen auf diesem Knoten(mit den eigenen Peers und Neighbour-Werten)
         //// TODO: 15.08.2017 nach update der eigenen PeersDB muss überprüft werden ob die Anzahl Peers nun 3 beträgt, falls dies der Fall ist => Split
         // TODO: 05.09.2017 Node erstellen. und an IP senden
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void increasePeersCount(){
         if(checkIfMaxPeersCount()){

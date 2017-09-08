@@ -8,6 +8,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.location.gps" />
 
 
@@ -41,13 +43,12 @@
 
 
 
-        <meta-data
+            <meta-data
 
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
-
-
+        <activity android:name="connection.ServerThreadActivity"/>
     </application>
 
 </manifest>

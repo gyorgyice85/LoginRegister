@@ -2,9 +2,9 @@ package connection;
 
 public class RoutHelper {
 
-    private String ip;
-    private double x,y;
-    private int id;
+    protected String ip;
+    protected double x,y;
+    protected int id;
 
 
     public RoutHelper(String ip, double x, double y, int id){
@@ -21,4 +21,19 @@ public class RoutHelper {
                 "id : " + id);
     }
 
+    public String getIP(){
+        return ip;
+    }
+
+    public Double getX(){
+        return x;
+    }
+
+    public Double getY(){
+        return y;
+    }
+
+    public Integer getID(){
+        return id;
+    }
 }

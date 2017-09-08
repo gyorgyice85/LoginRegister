@@ -5,10 +5,9 @@ package model;
  */
 
 public class OwnDataMemo {
-    //DateiMemo dateiMemo;
+
 
     public long uid;
-    //public boolean checked;
     public int fileId;
 
 
