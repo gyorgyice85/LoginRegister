@@ -23,7 +23,6 @@ public class Client {
 	 * @throws UnknownHostException			= unbekannter Host
 	 * @throws IOException					= Fehler beim Input/Output
 	 */
-	
 	protected void sendImageAsByteArray(Socket socket, File file){
 		
 		this.socket = socket;

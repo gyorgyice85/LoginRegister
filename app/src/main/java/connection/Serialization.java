@@ -59,10 +59,7 @@ public class Serialization {
 	}
 	
 	
-	
-	
-	
-	
+
 	/**
 	 * Methode, um aus einem ByteArray ein Knoten/Node wiederherzustellen
 	 * 
@@ -141,7 +138,8 @@ public class Serialization {
 	 */
 	public void imageDeSerializer(byte[] buffer, File destination)throws IOException{
 			
-			try(FileOutputStream fos = new FileOutputStream(destination)){
+			try{
+				FileOutputStream fos = new FileOutputStream(destination);
 				fos.write(buffer);
 				fos.close();
 			}catch (Exception e){
@@ -354,7 +352,7 @@ public class Serialization {
 	 * 		Der Header (byte[0]) ist fuer den MethodenAufrufNamen reserviert
 	 * 		Im Body (ab byte[1]) stehen die eigentlichen Nutzdaten
 	 * 
-	 * @param file		= die File, die in das HilfsByteArray geschrieben werden soll
+	 *
 	 * @return		= das erzeugte HilfsByteArray
 	 */
 	

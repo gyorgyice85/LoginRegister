@@ -209,8 +209,9 @@ public class Node {
 
         }
         int index = compareValues(distances);
-
-        //// TODO: 14.08.2017 Verbindungsaufbau zu dem Neighbour der an Stelle == Index steht und IP und x,y-Werte übertragen so das dieser weiter routen kann
+        
+        //// TODO: 07.09.2017 sende ein receiveRoutingRequest  an ip
+        //// TODO: 14.08.2017 Verbindungsaufbau zu dem Neighbour der an Stelle == Index steht und IP und x,y-Werte übertragen so das dieser weiter routen kann, bzw recreive routing request bei ihm aufrufen
     }
 
     /**
