@@ -127,15 +127,37 @@ public class Zone {
     public void split(Node node1, Node node2, Node node3, Node node4) {
 
         // we split the zone along the longest side
-        if (getLengthX(node1) > getLengthY(node1)) {
+        if (getLengthX(node1) >= getLengthY(node1)) {
 
-            double midX = x1 + getLengthX(node1) / 2.0;
+            double midX = getLengthX(node1) / 2.0;
             // set peers und neigbour und update Corner
+            node1.setCornerBottomRightX(midX);
+            node1.setCornerTopRightX(midX);
+
+            node2.setCornerTopRightX(midX);
+            node2.setCornerBottomRightX(midX);
+
+            node3.setCornerBottomLeftX(midX);
+            node3.setCornerTopLeftX(midX);
+
+            node4.setCornerTopLeftX(midX);
+            node4.setCornerBottomLeftX(midX);
 
         } else {
 
-            double midY = y1 + getLengthY(node1) / 2.0;
+            double midY =  getLengthY(node1) / 2.0;
             // set peers und neigbour und update Corner
+            node1.setCornerTopRightY(midY);
+            node1.setCornerTopLeftY(midY);
+
+            node2.setCornerBottomLeftY(midY);
+            node2.setCornerBottomRightY(midY);
+
+            node3.setCornerTopRightY(midY);
+            node3.setCornerTopLeftY(midY);
+
+            node4.setCornerBottomRightY(midY);
+            node4.setCornerBottomLeftY(midY);
         }
     }
 
@@ -143,14 +165,14 @@ public class Zone {
      * Get the length of the Y side of the zone
      */
     private double getLengthY(Node node) {
-        return node.getCornerTopLeftY() - node.getCornerBottomLeftY();
+        return   node.getCornerTopLeftY() - node.getCornerBottomLeftY();
     }
 
     /**
      * Get the length of the X side of the zone
      */
     private double getLengthX(Node node) {
-        return node.getCornerBottomLeftX() - node.getCornerBottomRightX();
+        return  node.getCornerBottomRightX() - node.getCornerBottomLeftX();
     }
 
     /**

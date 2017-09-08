@@ -1,9 +1,12 @@
 package app;
 
+
+
 import android.app.Application;
 import android.content.Context;
 
-import source.*;
+import source.DateiMemoDbHelper;
+import source.DatabaseManager;
 
 
 /**
@@ -18,8 +21,9 @@ public class App extends Application {
     public void onCreate()
     {
         super.onCreate();
-        context  = this.getApplicationContext();
-        dbHelper = new DateiMemoDbHelper();
+        System.out.println("APP.CONTEXT " + context);
+        context = this.getApplicationContext();
+        dbHelper = new DateiMemoDbHelper(context);
         DatabaseManager.initializeInstance(dbHelper);
 
     }

@@ -4,6 +4,7 @@ package source;
  * Created by en on 15.06.17.
  */
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -15,10 +16,16 @@ public class DateiMemoDbHelper extends SQLiteOpenHelper{
 
     private static final String LOG_TAG = DateiMemoDbHelper.class.getSimpleName();
 
+    //Standardkonstruktor
+    public DateiMemoDbHelper()
+    {
+        super(App.getContext(),DB_NAME,null,DB_VERSION);
+    }
+
     //Konstruktor
     //SUPER verwendet man, weil unsere "helper" ist eine Ableitung von SQLiteOpenHelper
-    public DateiMemoDbHelper( ) {
-        super(App.getContext(), DB_NAME, null, DB_VERSION);
+    public DateiMemoDbHelper(Context app) {
+        super(app, DB_NAME, null, DB_VERSION);
     }
 
 //-------------Wie man eine verbindung zu dem SQL macht-------------------------------
