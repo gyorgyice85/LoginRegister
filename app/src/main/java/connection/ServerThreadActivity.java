@@ -161,20 +161,14 @@ public class ServerThreadActivity extends Activity{
                         RoutHelper rh = server.getRoutHelper(buffer);
                         Zone zone = new Zone(corner,corner1,corner2,corner3);
 
-<<<<<<< HEAD
+
                         //oldNode Simuliert einen Knoten der bereits in CAN ist
-=======
->>>>>>> e484a9748ae1cb13e0dda08228e654dd6a05a3b2
-                        Node oldNode = new Node(01l, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, "192.168.2.110", 2, zone);
+                        Node oldNode = new Node(01l, 0.1, 0.1, "192.168.2.110", 2, zone);
 
+                        //da
                         Node nodeNew = oldNode.routing(rh.getIP(),rh.getX(),rh.getY(),rh.getID());
-<<<<<<< HEAD
+
                         Log.d("ZoneOfnewNode",""+ nodeNew.getMyZone().toString());
-=======
-
-                        Log.d("Node: " , nodeNew.toString());
-
->>>>>>> e484a9748ae1cb13e0dda08228e654dd6a05a3b2
                     }
                 }
 

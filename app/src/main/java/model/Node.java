@@ -70,36 +70,13 @@ public class Node {
     /**
      *
      * @param uid
-     * @param cornerTopRightX
-     * @param cornerTopRightY
-     * @param cornerTopLeftX
-     * @param cornerTopLeftY
-     * @param cornerBottomRightX
-     * @param cornerBottomRightY
-     * @param cornerBottomLeftX
-     * @param cornerBottomLeftY
      * @param punktX
      * @param punktY
      * @param iP
      * @param countPeers
      */
-    public Node(long uid,
-                double cornerTopRightX, double cornerTopRightY, double cornerTopLeftX, double cornerTopLeftY,
-                double cornerBottomRightX, double cornerBottomRightY, double cornerBottomLeftX, double cornerBottomLeftY,
-                double punktX, double punktY, String iP, int countPeers, Zone ownZone) {
+    public Node(long uid, double punktX, double punktY, String iP, int countPeers, Zone ownZone) {
         this.uid                 = uid;
-        //this.cornerTopRightX     = cornerTopRightX;
-        //this.cornerTopRightY     = cornerTopRightY;
-        //this.setCornerTopRight(cornerTopRightX,cornerTopRightY);
-        //this.cornerTopLeftX      = cornerTopLeftX;
-        //this.cornerTopLeftY      = cornerTopLeftY;
-        //this.setCornerTopLeft(cornerTopLeftX,cornerTopLeftY);
-        //this.cornerBottomRightX  = cornerBottomRightX;
-        //this.cornerBottomRightY  = cornerBottomRightY;
-        //this.setCornerBottomRight(cornerBottomRightX,cornerBottomRightY);
-        // this.cornerBottomLeftX   = cornerBottomLeftX;
-        // this.cornerBottomLeftY   = cornerBottomLeftY;
-        //this.setCornerBottomLeft(cornerBottomLeftX,cornerBottomLeftY);
         this.punktX              = punktX;
         this.punktY              = punktY;
         this.iP                  = iP;
@@ -237,7 +214,7 @@ public class Node {
         Node returnNode = new Node();
 
         if(getMyZone().checkIfInMyZone(x,y)){
-            Node newNode = new Node(id, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, x, y, ip, 3, getMyZone());
+            Node newNode = new Node(id, x, y, ip, 3, getMyZone());
             if(checkIfMaxPeersCount()){
                 //splitt
 
@@ -513,6 +490,21 @@ public class Node {
         this.uid = uid;
     }
 
+    public Corner getTopRight(){
+        return getMyZone().getTopRight();
+    }
+
+    public Corner getTopLeft(){
+        return getMyZone().getTopLeft();
+    }
+
+    public Corner getBottomRight(){
+        return getMyZone().getTopRight();
+    }
+
+    public Corner getBottomLeft(){
+        return getMyZone().getBottomLeft();
+    }
      public double getCornerTopRightX() {
      return cornerTopRightX;
      //return dateiMemoDbSource.getCornerTopRightX();
