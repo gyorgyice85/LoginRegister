@@ -37,6 +37,9 @@ public class Zone {
         this.y2 = y2;
     }
 
+
+
+
     /**
      * Decides whether point (x; y) is in this zone
      * @param x
@@ -140,54 +143,54 @@ public class Zone {
      *
      * @return the new pair of zones created by splitting this zone
      */
-    public void split(Node node1, Node node2, Node node3, Node node4) {
 
-        // we split the zone along the longest side
-        if (getLengthX(node1) >= getLengthY(node1)) {
+     public void split(Node node1, Node node2, Node node3, Node node4) {
 
-            double midX = getLengthX(node1) / 2.0;
-            // set peers und neigbour und update Corner
-            node1.setCornerBottomRightX(midX);
-            node1.setCornerTopRightX(midX);
+     // we split the zone along the longest side
+     if (getLengthX(node1) >= getLengthY(node1)) {
 
-            node2.setCornerTopRightX(midX);
-            node2.setCornerBottomRightX(midX);
+     double midX = getLengthX(node1) / 2.0;
+     // set peers und neigbour und update Corner
+     node1.setCornerBottomRightX(midX);
+     node1.setCornerTopRightX(midX);
 
-            node3.setCornerBottomLeftX(midX);
-            node3.setCornerTopLeftX(midX);
+     node2.setCornerTopRightX(midX);
+     node2.setCornerBottomRightX(midX);
 
-            node4.setCornerTopLeftX(midX);
-            node4.setCornerBottomLeftX(midX);
+     node3.setCornerBottomLeftX(midX);
+     node3.setCornerTopLeftX(midX);
 
-        } else {
+     node4.setCornerTopLeftX(midX);
+     node4.setCornerBottomLeftX(midX);
 
-            double midY =  getLengthY(node1) / 2.0;
-            // set peers und neigbour und update Corner
-            node1.setCornerTopRightY(midY);
-            node1.setCornerTopLeftY(midY);
+     } else {
 
-            node2.setCornerBottomLeftY(midY);
-            node2.setCornerBottomRightY(midY);
+     double midY =  getLengthY(node1) / 2.0;
+     // set peers und neigbour und update Corner
+     node1.setCornerTopRightY(midY);
+     node1.setCornerTopLeftY(midY);
 
-            node3.setCornerTopRightY(midY);
-            node3.setCornerTopLeftY(midY);
+     node2.setCornerBottomLeftY(midY);
+     node2.setCornerBottomRightY(midY);
 
-            node4.setCornerBottomRightY(midY);
-            node4.setCornerBottomLeftY(midY);
-        }
-    }
+     node3.setCornerTopRightY(midY);
+     node3.setCornerTopLeftY(midY);
 
+     node4.setCornerBottomRightY(midY);
+     node4.setCornerBottomLeftY(midY);
+     }
+     }
     /**
      * Get the length of the Y side of the zone
      */
-    private double getLengthY(Node node) {
+      private double getLengthY(Node node) {
         return   node.getCornerTopLeftY() - node.getCornerBottomLeftY();
     }
 
     /**
      * Get the length of the X side of the zone
      */
-    private double getLengthX(Node node) {
+      private double getLengthX(Node node) {
         return  node.getCornerBottomRightX() - node.getCornerBottomLeftX();
     }
 
@@ -199,7 +202,7 @@ public class Zone {
      * @param //z2 The second zone to merge
      * @return the zone created by merging the two zones
      */
-    /*   BRAUCHEN WIR DAS ÜBERHAUPT
+    /*   BRAUCHEN WIR DAS ÃœBERHAUPT
     public static Zone merge(Zone z1, Zone z2) {
 
         if (!z1.isNeighbour(z2)) {
@@ -240,6 +243,7 @@ public class Zone {
                     " and thus cannot be merged.");
         }
     }*/
+
 
     public String toString(){
         StringBuffer sb = new StringBuffer();

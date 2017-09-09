@@ -23,7 +23,8 @@ public class App extends Application {
         super.onCreate();
         System.out.println("APP.CONTEXT " + context);
         context = this.getApplicationContext();
-        dbHelper = new DateiMemoDbHelper(context);
+        //dbHelper = new DateiMemoDbHelper(context);
+        dbHelper = new DateiMemoDbHelper();
         DatabaseManager.initializeInstance(dbHelper);
 
     }
