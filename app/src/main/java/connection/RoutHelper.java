@@ -1,6 +1,6 @@
 package connection;
 
-public class RoutHelper {
+public class RoutHelper implements java.io.Serializable {
 
     protected String ip;
     protected double x,y;
