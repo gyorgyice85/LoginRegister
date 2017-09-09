@@ -246,12 +246,13 @@ public class Node {
     }
 
 
-    public void routing(String ip, double x ,double y, long id) throws IOException {
-        routingCheckZone(ip,x,y,id);
+    public Node routing(String ip, double x ,double y, long id) throws IOException {
+        Node nodeNew = routingCheckZone(ip,x,y,id);
 
         socket = new Socket("192.168.2.110", PORTNR);
         RoutHelper rh = new RoutHelper(ip,x,y,id);
-        client.sendRoutHelperAsByteArray(socket,rh);
+        return nodeNew;
+        //client.sendRoutHelperAsByteArray(socket,rh);
 
     }
     /**

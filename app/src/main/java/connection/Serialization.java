@@ -19,7 +19,7 @@ public class Serialization {
 	protected static final int MAX_GR_PIC_IN_KB 				= 10;
 	protected static final int STR_SEND_IMG 					= 1;
 	protected static final int STR_SEND_NODE 					= 2;
-	protected static final int STR_SEND_ROUTING_REQUEST 		= 3;
+	protected static final int STR_SEND_ROUTING_REQUEST 		= 7;
 	protected static final int STR_SEND_NEIGHBOUR 				= 4;
 	protected static final int STR_SEND_PEERMEMO 				= 5;
 	protected static final int STR_SEND_FOREIGNDATA 			= 6;

@@ -160,7 +160,7 @@ public class ServerThreadActivity extends Activity{
 
                         Zone zone = new Zone(corner,corner1,corner2,corner3);
                         Node oldNode = new Node(01l, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, "192.168.2.110", 2, zone);
-                        oldNode.routing(rh.getIP(),rh.getX(),rh.getY(),rh.getID());
+                        Node nodeNew = oldNode.routing(rh.getIP(),rh.getX(),rh.getY(),rh.getID());
 
                     }
                 }

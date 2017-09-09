@@ -188,7 +188,7 @@ public class UserAreaActivity extends Activity {
         @Override
         public void onClick(View v) {
             client = new Client();
-            Zone zone = new Zone();
+
             try {
                 Socket socket = new Socket("192.168.2.110", 8080);
 
