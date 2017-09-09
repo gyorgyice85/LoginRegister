@@ -18,7 +18,7 @@ public class ParserTest {
 
 		try{
 			System.out.println("Server is started");
-			ss = new ServerSocket(9797);
+			ss = new ServerSocket(8080);
 
 			System.out.println("Server is waiting for request");
 			Socket s = ss.accept();

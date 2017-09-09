@@ -30,10 +30,16 @@ import task.RoutingTask;
  */
 
 public class ServerThreadActivity extends Activity{
+    private static final int FILETRANS=  1;
+    private static final int NODETRANS=  2;
+    private static final int NEIGHTRANS= 4;
+    private static final int PEERTRANS = 5;
+    private static final int FOREIGNTRANS = 6;
     private static final int ROUTING = 7;
 
-    Socket socket = null;
-    Server server = new Server();
+    private Socket socket = null;
+    private Server server = new Server();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +47,9 @@ public class ServerThreadActivity extends Activity{
         new ServerThread().execute();
     }
 
+
     class ServerThread extends AsyncTask<String, String, String> {
-
-
         protected String doInBackground(String... args) {
-
             Serialization serialization = new Serialization();
             ServerSocket ss = null;
             Node node = null;
@@ -68,11 +72,8 @@ public class ServerThreadActivity extends Activity{
                 Log.d("Received ByteArray", "");
 
                 int methodName = serialization.getByteHeader(buffer);
-
-
                 switch (methodName) {
-
-                    case 1: {
+                    case FILETRANS: {
 
                         Log.d("File Transfer Request", "");
 
@@ -91,7 +92,7 @@ public class ServerThreadActivity extends Activity{
                         break;
                     }
 
-                    case 2: {
+                    case NODETRANS: {
 
                         Log.d("Node Transfer Request", "");
 
@@ -119,7 +120,7 @@ public class ServerThreadActivity extends Activity{
                         break;
                     }
 
-                    case 4: {
+                    case NEIGHTRANS: {
                         System.out.println("Send Neighbour");
 
                         neighbour = server.getNeighbour(buffer);
@@ -129,7 +130,7 @@ public class ServerThreadActivity extends Activity{
                         break;
                     }
 
-                    case 5: {
+                    case PEERTRANS: {
                         System.out.println("Send PeerMemo");
 
                         peerMemo = server.getPeerMemo(buffer);
@@ -139,7 +140,7 @@ public class ServerThreadActivity extends Activity{
                         break;
                     }
 
-                    case 6: {
+                    case FOREIGNTRANS: {
                         System.out.println("Send Foreign Data");
 
                         foreignData = server.getForeignData(buffer);
@@ -157,11 +158,12 @@ public class ServerThreadActivity extends Activity{
                         Corner corner3 = new Corner(0.5,0.6);
 
                         RoutHelper rh = server.getRoutHelper(buffer);
-
                         Zone zone = new Zone(corner,corner1,corner2,corner3);
+
+                        //oldNode Simuliert einen Knoten der bereits in CAN ist
                         Node oldNode = new Node(01l, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, "192.168.2.110", 2, zone);
                         Node nodeNew = oldNode.routing(rh.getIP(),rh.getX(),rh.getY(),rh.getID());
-
+                        Log.d("ZoneOfnewNode",""+ nodeNew.getMyZone().toString());
                     }
                 }
 
@@ -203,14 +205,10 @@ public class ServerThreadActivity extends Activity{
         }).execute("123.142.0.1");
     }
 
-    //noch params geben
+
     private void startRouting(String ip, double x, double y, int id){
         new RoutingTask().execute(ip,Double.toString(x),Double.toString(y),Integer.toString(id));
     }
-
-
-
-
 
     @Override
     protected void onDestroy() {

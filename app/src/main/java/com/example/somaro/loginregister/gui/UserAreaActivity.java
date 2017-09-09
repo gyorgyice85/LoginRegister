@@ -30,7 +30,6 @@ import connection.Client;
 import connection.RoutHelper;
 import connection.ServerThreadActivity;
 import model.Neighbour;
-import model.Node;
 import model.Zone;
 
 
@@ -73,6 +72,35 @@ public class UserAreaActivity extends Activity {
         String message = name + " welcome to your user area";
         welcomeMsg.setText(message);
     }
+
+
+
+    /**
+     * Button Test für Routing
+     */
+    View.OnClickListener RoutClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            client = new Client();
+
+            try {
+                //ip des s"imulierten" Knoten der bereits in CAN ist
+                Socket socket = new Socket("192.168.2.110", 8080);
+
+                //Daten des zu routenden Knoten
+                RoutHelper rh = new RoutHelper("192.168.2.101", 0.5, 0.4, 02l);
+
+                //senden des RoutHelper-Objectes
+                SendRoutTask srt = new SendRoutTask(socket, rh);
+                srt.execute();
+
+
+            } catch (IOException e) {
+                Log.d("client.sendNode", e.toString());
+            }
+
+        }
+    };
 
 
     View.OnClickListener StartServerListener = new View.OnClickListener() {
@@ -181,29 +209,6 @@ public class UserAreaActivity extends Activity {
     }
 
 
-    /**
-     * Button Test fÃ¼r Routing
-     */
-    View.OnClickListener RoutClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            client = new Client();
-
-            try {
-                Socket socket = new Socket("192.168.2.110", 8080);
-
-                RoutHelper rh = new RoutHelper("192.168.2.101", 0.5, 0.4, 02l);
-
-                SendRoutTask srt = new SendRoutTask(socket, rh);
-                srt.execute();
-
-
-            } catch (IOException e) {
-                Log.d("client.sendNode", e.toString());
-            }
-
-        }
-    };
 
     class SendRoutTask extends AsyncTask<Void, Void, Void> {
 

@@ -241,15 +241,15 @@ public class Zone {
         }
     }*/
 
-    @Override
-    public String toString() {
-        return "Zone{" +
-                "x1=" + x1 +
-                ", y1=" + y1 +
-                ", x2=" + x2 +
-                ", y2=" + y2 +
-                '}';
+    public String toString(){
+        StringBuffer sb = new StringBuffer();
+
+        sb.append(topRight.toString()).append(topLeft.toString()).append(bottomRight.toString()).append(bottomLeft.toString());
+
+        return sb.toString();
     }
+
+
 
     @Override
     public boolean equals(Object o) {

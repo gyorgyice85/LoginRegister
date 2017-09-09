@@ -14,12 +14,12 @@ import java.util.List;
  * @author Axel Czuck
  * class to retrieve all IPs, which are stored on a webserver
  */
-class AllIPsActivity extends AsyncTask<String, String, String[]> {
+public class AllIPsActivity extends AsyncTask<String, String, String[]> {
     String[] ipsList;
     /**
      * Interface to retrieve the result-list in an String-array
      */
-    interface AsyncResponse {
+    public interface AsyncResponse {
         void processFinish(String[] result);
     }
 
@@ -30,7 +30,7 @@ class AllIPsActivity extends AsyncTask<String, String, String[]> {
      * @param delegate
      * @throws JSONException
      */
-    AllIPsActivity(AsyncResponse delegate) throws JSONException {
+    public AllIPsActivity(AsyncResponse delegate) throws JSONException {
         this.delegate = delegate;
     }
 

@@ -647,10 +647,11 @@ public class Node {
 
 
 
+
     @Override
     public String toString() {
         String output = uid + " -- " + iP +
-                "\nCorner top Left : x -> "+ cornerTopLeftX + " -- y -> "+ cornerTopLeftY +
+                "\nCorner top Left : x -> "+  cornerTopLeftX + " -- y -> "+ cornerTopLeftY +
                 "\nCorner top Right : x -> "+ cornerTopRightX + " -- y -> "+ cornerTopRightY +
                 "\nCorner Bottom Left : x -> "+ cornerBottomLeftX + " -- y -> "+ cornerBottomLeftY +
                 "\nCorner Bottom Right : x -> "+ cornerBottomRightX + " -- y -> "+ cornerBottomRightY +
