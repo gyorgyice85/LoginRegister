@@ -51,13 +51,13 @@ public class Node {
     }
 
  //Zum Testen der Splittfunktion
- public Node(Corner bottomLeft, Corner bottomRight, Corner topLeft, Corner topRight)
+/* public Node(Corner bottomLeft, Corner bottomRight, Corner topLeft, Corner topRight)
  {
  this.setCornerBottomLeft(bottomLeft.getX(),bottomLeft.getY());
  this.setCornerBottomRight(bottomRight.getX(),bottomRight.getY());
  this.setCornerTopLeft(topLeft.getX(),topLeft.getY());
  this.setCornerTopRight(topRight.getX(),topRight.getY());
- }
+ }*/
 
     /**
      *
