@@ -144,7 +144,6 @@ public class Zone {
      * @return the new pair of zones created by splitting this zone
      */
 
-    /**
      public void split(Node node1, Node node2, Node node3, Node node4) {
 
      // we split the zone along the longest side
@@ -181,20 +180,19 @@ public class Zone {
      node4.setCornerBottomLeftY(midY);
      }
      }
-     */
     /**
      * Get the length of the Y side of the zone
      */
-    //  private double getLengthY(Node node) {
-    //    return   node.getCornerTopLeftY() - node.getCornerBottomLeftY();
-    //}
+      private double getLengthY(Node node) {
+        return   node.getCornerTopLeftY() - node.getCornerBottomLeftY();
+    }
 
     /**
      * Get the length of the X side of the zone
      */
-    //  private double getLengthX(Node node) {
-    //    return  node.getCornerBottomRightX() - node.getCornerBottomLeftX();
-    //}
+      private double getLengthX(Node node) {
+        return  node.getCornerBottomRightX() - node.getCornerBottomLeftX();
+    }
 
     /**
      * Merge two zones and create a single one from the merged zones.
