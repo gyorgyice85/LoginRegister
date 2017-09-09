@@ -25,15 +25,15 @@ public class RoutHelper {
         return ip;
     }
 
-    public Double getX(){
+    public double getX(){
         return x;
     }
 
-    public Double getY(){
+    public double getY(){
         return y;
     }
 
-    public Integer getID(){
+    public int getID(){
         return id;
     }
 }

@@ -3,7 +3,6 @@ package source;
 /**
  * Created by en on 13.08.17.
  */
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -12,7 +11,10 @@ import android.util.Log;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import model.*;
+import source.DatabaseManager;
+import source.DateiMemoDbHelper;
+import model.Node;
+import model.ForeignData;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -220,15 +222,15 @@ public class ForeignDataDbSource {
 //        return foreignData;
 //    }
 
-     /*
-    *           Get
-    *
-    *
-    *           All Data
-    *
-    *
-    *
-    * */
+    /*
+   *           Get
+   *
+   *
+   *           All Data
+   *
+   *
+   *
+   * */
      /*
     *           Get
     *
@@ -237,22 +239,22 @@ public class ForeignDataDbSource {
     *
     *
     * */
-     public double getPunktXForeign(long uid) {
-         database = DatabaseManager.getInstance().openDatabase();
-         String selectQuery = "SELECT "+ DateiMemoDbHelper.COLUMN_PUNKTX +" FROM " + DateiMemoDbHelper.TABLE_FOREIGNDATA_LIST + " WHERE "
-                 + DateiMemoDbHelper.COLUMN_FID + " = " + uid;
+    public double getPunktXForeign(long uid) {
+        database = DatabaseManager.getInstance().openDatabase();
+        String selectQuery = "SELECT "+ DateiMemoDbHelper.COLUMN_PUNKTX +" FROM " + DateiMemoDbHelper.TABLE_FOREIGNDATA_LIST + " WHERE "
+                + DateiMemoDbHelper.COLUMN_FID + " = " + uid;
 
-         Log.e(LOG_TAG, selectQuery);
+        Log.e(LOG_TAG, selectQuery);
 
-         Cursor c = database.rawQuery(selectQuery, null);
+        Cursor c = database.rawQuery(selectQuery, null);
 
-         if (c != null)
-             c.moveToFirst();
-         double punktX;
-         punktX = c.getDouble(c.getColumnIndex(DateiMemoDbHelper.COLUMN_PUNKTX));
-         DatabaseManager.getInstance().closeDatabase();
-         return punktX;
-     }
+        if (c != null)
+            c.moveToFirst();
+        double punktX;
+        punktX = c.getDouble(c.getColumnIndex(DateiMemoDbHelper.COLUMN_PUNKTX));
+        DatabaseManager.getInstance().closeDatabase();
+        return punktX;
+    }
     //
     // ================================================================================================================================
     //

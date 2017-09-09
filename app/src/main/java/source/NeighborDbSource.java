@@ -4,6 +4,10 @@ package source;
  * Created by en on 13.08.17.
  */
 
+/**
+ * Created by en on 13.08.17.
+ */
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -12,7 +16,10 @@ import android.util.Log;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import model.*;
+import source.DatabaseManager;
+import source.DateiMemoDbHelper;
+import model.Node;
+import model.Neighbour;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -433,24 +440,24 @@ public class NeighborDbSource {
     *
     *
     * */
-        public void udpateRTT(double newRTT) {
-            //1. Öffne Database
-            database = DatabaseManager.getInstance().openDatabase();
+    public void udpateRTT(double newRTT) {
+        //1. Öffne Database
+        database = DatabaseManager.getInstance().openDatabase();
 
-            //2. Erstell neue Wert
-            ContentValues values = new ContentValues();
-            values.put(DateiMemoDbHelper.COLUMN_RTT, newRTT);
+        //2. Erstell neue Wert
+        ContentValues values = new ContentValues();
+        values.put(DateiMemoDbHelper.COLUMN_RTT, newRTT);
 
-            //3. Update Database
-            database.update(DateiMemoDbHelper.TABLE_NEIGHBOR_LIST, //UPDATE which TABLE
-                    values, // SET query
-                    null, // should be WHERE query
-                    null  // should be Array
-            );
+        //3. Update Database
+        database.update(DateiMemoDbHelper.TABLE_NEIGHBOR_LIST, //UPDATE which TABLE
+                values, // SET query
+                null, // should be WHERE query
+                null  // should be Array
+        );
 
-            //4. Schliess Database
-            DatabaseManager.getInstance().closeDatabase();
-        }
+        //4. Schliess Database
+        DatabaseManager.getInstance().closeDatabase();
+    }
     /*
     *  ================================================================================================================================
     */
@@ -506,7 +513,6 @@ public class NeighborDbSource {
 //        return neighborMemo;
 //    }
 
-
     /*
     *           Get
     *
@@ -518,6 +524,7 @@ public class NeighborDbSource {
     * */
     public double getCornerBottomRightXNeighbor(int index) {
         database = DatabaseManager.getInstance().openDatabase();
+        //List<Double> CornerBottomRightList = new ArrayList<>();
         String selectQuery = "SELECT "+ DateiMemoDbHelper.COLUMN_CORNERBOTTOMRIGHTX +" FROM " + DateiMemoDbHelper.TABLE_NEIGHBOR_LIST + " WHERE "
                 + DateiMemoDbHelper.COLUMN_NID + " = " + index;
 

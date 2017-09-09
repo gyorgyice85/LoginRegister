@@ -12,8 +12,12 @@ import android.util.Log;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import source.*;
-import model.*;
+import source.DatabaseManager;
+import source.DateiMemoDbHelper;
+import model.Node;
+import model.ForeignData;
+import model.OwnDataMemo;
+import model.PeerMemo;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -91,7 +95,7 @@ public class PeerDbSource {
         }
 
         return ret;
-     }
+    }
 
     public int listToInt(List<Integer> list){
         int[] tmp = new int[list.size()];

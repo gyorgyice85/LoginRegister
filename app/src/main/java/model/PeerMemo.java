@@ -7,16 +7,17 @@ public class PeerMemo {
     private long uid;
     private long peerId;
     private String peerIp;
-    //private boolean checked;
 
 
+    public PeerMemo(){
+    }
 
-//    public PeerMemo(long uid, int peerId, String peerIp, boolean checked) {
-//        this.uid = uid;
-//        this.peerId = peerId;
-//        this.peerIp = peerIp;
-//        this.checked = checked;
-//    }
+    public PeerMemo(long uid, int peerId, String peerIp) {
+        this.uid = uid;
+        this.peerId = peerId;
+        this.peerIp = peerIp;
+
+    }
 
     public long getUid() {
         return uid;

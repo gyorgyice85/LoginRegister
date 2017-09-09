@@ -11,7 +11,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import bootstrap.AllIPsActivity;
+
 import connection.Client;
 import connection.RoutHelper;
 import source.DatabaseManager;
@@ -24,29 +24,14 @@ import source.PeerDbSource;
  */
 
 public class Node {
-    /**
-     * Mit dieser Methode findet ein neuer Knoten einen Einstiegspunkt in das CAN, indem er den Bootstrapserver nach einer IP anfragt
-     */
-    private static void requestJoin() throws JSONException {
-        AllIPsActivity all = new AllIPsActivity();
-        if(all.ipsList.isEmpty()){
-            Log.e("Fehler " , "Ist leer!");
-        }else{
-            for (int i = 0; i <all.ipsList.size(); i++){
-                Log.d("Inhalt ", all.ipsList.get(i).toString());
-            }
 
-        }
-        //// TODO: 15.08.2017 getBootsTrapIP() Methode
-        //// TODO: 15.08.2017 nun Verbindung zu dieser IP herstellen und routing-Anfrage mit(eigener IP und x ,y Werten, id und isNode als Parameter)
-    }
 
-    private static final int maxPeers= 3;
-    private NeighborDbSource nDB;
-    private PeerDbSource peerDB;
-    private OwnDataDbSource ownDataDB;
-    private static final long DIVIDER=2552552552l;
-    private static final int PORTNR = 8080;
+    private static final int    maxPeers= 3;
+    private NeighborDbSource    nDB;
+    private PeerDbSource        peerDB;
+    private OwnDataDbSource     ownDataDB;
+    private static final long   DIVIDER=2552552552l;
+    private static final int    PORTNR = 8080;
 
     private long   uid;
     private double cornerTopRightX;
@@ -61,7 +46,7 @@ public class Node {
     private double punktY;
     private String iP;
     private int    countPeers;
-    private Zone ownZone;
+    private Zone   ownZone;
     private DateiMemoDbSource dateiMemoDbSource = new DateiMemoDbSource();
     private PeerMemo peerMemo;
     private Socket socket;
@@ -219,20 +204,18 @@ public class Node {
         //fortsetzung des routing
         routing(ip,x,y,id);
     }
-
     /**
-     * Routing Methode: In der Routing-Methode wird die Distanz zu allen Nachbarn berechnet und zu dem routet zu dem die Distanz am geringsten ist
+     * Hilfsmethode zum routing um zu überprüfen ob der zu routende Knoten in der momentanen Zone liegt
      * @param ip Des zu routenden Knoten/Bild
      * @param x Des zu routenden Knoten/Bild
      * @param y Des zu routenden Knoten/Bild
      * @param id Des zu routenden Knoten/Bild
      */
-    private void routing(String ip, double x ,double y, int id) throws IOException {
-        double neighbourX, neighbourY;
-        double [] distances = new double[4];
-
-
+    private void routingCheckZone(String ip, double x ,double y, int id){
         if(getMyZone().checkIfInMyZone(x,y)){
+            //was für peerId mitte?
+            PeerMemo pm = new PeerMemo(id,0,ip);
+
             //neuen Knoten seine aktuelle PeersList geben (mit sichselbst)
             //neuen Knoten eintragen in eigene peer list
 
@@ -247,6 +230,22 @@ public class Node {
             }
 
         }
+    }
+
+    /**
+     * Routing Methode: In der Routing-Methode wird die Distanz zu allen Nachbarn berechnet und zu dem routet zu dem die Distanz am geringsten ist
+     * @param ip Des zu routenden Knoten/Bild
+     * @param x Des zu routenden Knoten/Bild
+     * @param y Des zu routenden Knoten/Bild
+     * @param id Des zu routenden Knoten/Bild
+     */
+    public void routing(String ip, double x ,double y, int id) throws IOException {
+        double neighbourX, neighbourY;
+        double [] distances = new double[4];
+
+        //bricht routing ab falls richtige zone gefunden wurde
+        routingCheckZone(ip,x,y,id);
+
 
         //bei 1 anfangen?
         for(int i=0; i<=distances.length ; i++){
@@ -271,6 +270,31 @@ public class Node {
         //// TODO: 07.09.2017 sende ein receiveRoutingRequest  an ip
         //// TODO: 14.08.2017 Verbindungsaufbau zu dem Neighbour der an Stelle == Index steht und IP und x,y-Werte übertragen so das dieser weiter routen kann, bzw recreive routing request bei ihm aufrufen
     }
+
+    //axel fragen wie ich jetzt die iplist bekomme
+    /**
+     * Mit dieser Methode findet ein neuer Knoten einen Einstiegspunkt in das CAN, indem er den Bootstrapserver nach einer IP anfragt
+     *
+     */
+    /*
+    private static void requestJoin() throws JSONException {
+        AllIPsActivity all = new AllIPsActivity();
+        if(all.ipsList.isEmpty()){
+            Log.e("Fehler " , "Ist leer!");
+        }else{
+
+            for (int i = 0; i <all.ipsList.size(); i++){
+
+
+
+                Log.d("Inhalt ", all.ipsList.get(i).toString());
+            }
+
+        }
+        //// TODO: 15.08.2017 getBootsTrapIP() Methode
+        //// TODO: 15.08.2017 nun Verbindung zu dieser IP herstellen und routing-Anfrage mit(eigener IP und x ,y Werten, id und isNode als Parameter)
+    }
+    */
 
     /**
      * Methode um ein Bild auf dem Gerät und dann auch im CAN zu löschen

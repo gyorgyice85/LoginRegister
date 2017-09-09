@@ -1,5 +1,4 @@
 package source;
-
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -32,6 +31,13 @@ public class DatabaseManager {
         return instance;
     }
 
+    /*
+    * Open Database
+    *
+    * Synchronized -- It'll be create a multiple Table
+    *
+    * reduction to cause chaos
+    * */
     public synchronized SQLiteDatabase openDatabase() {
         mOpenCounter+=1;
         if(mOpenCounter == 1) {
@@ -41,6 +47,9 @@ public class DatabaseManager {
         return mDatabase;
     }
 
+    /*
+    * Close Database
+    * */
     public synchronized void closeDatabase() {
         mOpenCounter-=1;
         if(mOpenCounter == 0) {

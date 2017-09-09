@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 
+import org.json.JSONException;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -15,6 +17,9 @@ import model.ForeignData;
 import model.Neighbour;
 import model.Node;
 import model.PeerMemo;
+import task.HashXTask;
+import task.HashYTask;
+import task.RoutingTask;
 
 /**
  * Created by Cedric on 06.09.2017.
@@ -24,7 +29,6 @@ public class ServerThreadActivity extends Activity{
 
 
     Socket socket = null;
-    ServerSocket serverSocket = null;
     Server server = new Server();
 
     @Override
@@ -49,7 +53,7 @@ public class ServerThreadActivity extends Activity{
                 Log.d("Server is started", "");
                 ss = new ServerSocket(8080);
 
-                Log.d("Server waits for requ", "");
+                Log.d("Server waits for reque", "");
                 Socket s = ss.accept();
 
                 Log.d("Client Connected", "");
@@ -105,7 +109,7 @@ public class ServerThreadActivity extends Activity{
 
                         Log.d("RoutHelper: ", routHelper.toString());
 
-                        nodeHelper.receiveRoutingRequest(routHelper.getIP(), routHelper.getX(),routHelper.getY(),routHelper.getID());
+                        nodeHelper.routing(routHelper.getIP(), routHelper.getX(),routHelper.getY(),routHelper.getID());
 
                         break;
                     }
@@ -156,6 +160,33 @@ public class ServerThreadActivity extends Activity{
             return null;
         }
     }
+
+    private void startHashX() throws JSONException {
+        new HashXTask(new HashXTask.AsyncResponse(){
+            @Override
+            public void processFinish(double d){
+                Log.d("HashX in processFinish ", "d"+d);
+            }
+        }).execute("123.142.0.1");
+    }
+
+    private void startHashY() throws JSONException {
+        new HashYTask(new HashYTask.AsyncResponse(){
+            @Override
+            public void processFinish(double d){
+                Log.d("HashY in processFinish ", "d"+d);
+            }
+        }).execute("123.142.0.1");
+    }
+
+    //noch params geben
+    private void startRouting(String ip, double x, double y, int id){
+        new RoutingTask().execute(ip,Double.toString(x),Double.toString(y),Integer.toString(id));
+    }
+
+
+
+
 
     @Override
     protected void onDestroy() {
