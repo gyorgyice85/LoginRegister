@@ -117,6 +117,22 @@ public class Zone {
         }
     }
 
+    public Corner getTopRight(){
+        return topRight;
+    }
+
+    public Corner getTopLeft(){
+        return topLeft;
+    }
+
+    public Corner getBottomLeft() {
+        return bottomLeft;
+    }
+
+    public Corner getBottomRight() {
+        return bottomRight;
+    }
+
     /**
      * Split a zone along its longest side into two new zones.
 

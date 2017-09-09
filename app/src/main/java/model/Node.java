@@ -211,7 +211,7 @@ public class Node {
      * @param y Des zu routenden Knoten/Bild
      * @param id Des zu routenden Knoten/Bild
      */
-    private void routingCheckZone(String ip, double x ,double y, int id){
+    private void routingCheckZoneDB(String ip, double x ,double y, int id){
         if(getMyZone().checkIfInMyZone(x,y)){
             //was für peerId mitte?
             PeerMemo pm = new PeerMemo(id,0,ip);
@@ -232,6 +232,28 @@ public class Node {
         }
     }
 
+    private Node routingCheckZone(String ip, double x ,double y, long id){
+        if(getMyZone().checkIfInMyZone(x,y)){
+            Node newNode = new Node(id, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, x, y, ip, 3, getMyZone());
+            if(checkIfMaxPeersCount()){
+                //splitt
+
+            }
+            return newNode;
+
+        }
+        return null;
+    }
+
+
+    public void routing(String ip, double x ,double y, long id) throws IOException {
+        routingCheckZone(ip,x,y,id);
+
+        socket = new Socket("192.168.2.110", PORTNR);
+        RoutHelper rh = new RoutHelper(ip,x,y,id);
+        client.sendRoutHelperAsByteArray(socket,rh);
+
+    }
     /**
      * Routing Methode: In der Routing-Methode wird die Distanz zu allen Nachbarn berechnet und zu dem routet zu dem die Distanz am geringsten ist
      * @param ip Des zu routenden Knoten/Bild
@@ -239,7 +261,7 @@ public class Node {
      * @param y Des zu routenden Knoten/Bild
      * @param id Des zu routenden Knoten/Bild
      */
-    public void routing(String ip, double x ,double y, int id) throws IOException {
+    public void routingDB(String ip, double x ,double y, int id) throws IOException {
         double neighbourX, neighbourY;
         double [] distances = new double[4];
 
@@ -250,11 +272,11 @@ public class Node {
         //bei 1 anfangen?
         for(int i=0; i<=distances.length ; i++){
 
-                //Die x und y Werte des Nachbarn von der DB holen
-                neighbourX = nDB.getPunktXNeighbor(i);
-                neighbourY = nDB.getPunktYNeighbor(i);
-                // Nun diese Distanzen berechnen und die am nächsten an dem Punkt zu dem gerouted werden soll.
-                distances[i] = computeDistance(x,y,neighbourX,neighbourY);
+            //Die x und y Werte des Nachbarn von der DB holen
+            neighbourX = nDB.getPunktXNeighbor(i);
+            neighbourY = nDB.getPunktYNeighbor(i);
+            // Nun diese Distanzen berechnen und die am nächsten an dem Punkt zu dem gerouted werden soll.
+            distances[i] = computeDistance(x,y,neighbourX,neighbourY);
 
         }
         int index = compareValues(distances);
@@ -453,6 +475,8 @@ public class Node {
             return false;
         }
     }
+
+
 
     private void setCornerBottomLeft(double x, double y)
     {

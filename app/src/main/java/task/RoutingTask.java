@@ -82,11 +82,12 @@ public class RoutingTask extends AsyncTask<String, String , String> {
 
     /**
      * Hilfsmethode zum routing um zu überprüfen ob der zu routende Knoten in der momentanen Zone liegt
-     * 
+     *
      */
-    /*
+
     private void routingCheckZone(String ip, double x ,double y, int id){
-        if(getMyZone().checkIfInMyZone(x,y)){
+        //getMyZone().checkIfInMyZone(x,y)
+        if(true){
             //was für peerId mitte?
             PeerMemo pm = new PeerMemo(id,0,ip);
 
@@ -105,7 +106,7 @@ public class RoutingTask extends AsyncTask<String, String , String> {
 
         }
     }
-    */
+
 
     //wo countPeers, es gibt keine peersCount methode für db
     private boolean checkIfMaxPeersCount(){

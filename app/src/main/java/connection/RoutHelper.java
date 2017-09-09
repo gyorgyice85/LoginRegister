@@ -4,10 +4,10 @@ public class RoutHelper {
 
     protected String ip;
     protected double x,y;
-    protected int id;
+    protected long id;
 
 
-    public RoutHelper(String ip, double x, double y, int id){
+    public RoutHelper(String ip, double x, double y, long id){
         this.ip = ip;
         this.x  = x;
         this.y  = y;
@@ -33,7 +33,7 @@ public class RoutHelper {
         return y;
     }
 
-    public int getID(){
+    public long getID(){
         return id;
     }
 }

@@ -13,10 +13,14 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import exception.XMustBeLargerThanZeroException;
+import exception.YMustBeLargerThanZeroException;
+import model.Corner;
 import model.ForeignData;
 import model.Neighbour;
 import model.Node;
 import model.PeerMemo;
+import model.Zone;
 import task.HashXTask;
 import task.HashYTask;
 import task.RoutingTask;
@@ -26,7 +30,7 @@ import task.RoutingTask;
  */
 
 public class ServerThreadActivity extends Activity{
-
+    private static final int ROUTING = 7;
 
     Socket socket = null;
     Server server = new Server();
@@ -38,6 +42,7 @@ public class ServerThreadActivity extends Activity{
     }
 
     class ServerThread extends AsyncTask<String, String, String> {
+
 
         protected String doInBackground(String... args) {
 
@@ -143,10 +148,29 @@ public class ServerThreadActivity extends Activity{
 
                         break;
                     }
+
+                    case ROUTING: {
+                        Log.d("Routing:", "route");
+                        Corner corner  = new Corner(0.3,0.4);
+                        Corner corner1 = new Corner(0.5,0.4);
+                        Corner corner2 = new Corner(0.3,0.6);
+                        Corner corner3 = new Corner(0.5,0.6);
+
+                        RoutHelper rh = server.getRoutHelper(buffer);
+
+                        Zone zone = new Zone(corner,corner1,corner2,corner3);
+                        Node oldNode = new Node(01l, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, "192.168.2.110", 2, zone);
+                        oldNode.routing(rh.getIP(),rh.getX(),rh.getY(),rh.getID());
+
+                    }
                 }
 
                 ss.close();
             } catch (Exception e) {
+                e.printStackTrace();
+            } catch (YMustBeLargerThanZeroException e) {
+                e.printStackTrace();
+            } catch (XMustBeLargerThanZeroException e) {
                 e.printStackTrace();
             } finally {
                 try {
